@@ -12,7 +12,6 @@ public final class Action {
     private String rate;
     private String subscribedGenre;
     private Movie addedMovie;
-
     private String deletedMovie;
     private Credentials credentials;
     private Filters filters;

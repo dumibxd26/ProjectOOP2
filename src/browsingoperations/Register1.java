@@ -6,12 +6,12 @@ import readinput.User;
 
 import java.util.ArrayList;
 
-public final class Register extends ActionBuilder {
+public final class Register1 extends ActionBuilder {
 
-    private static Register instance = null;
+    private static Register1 instance = null;
 
     private static ActionBuilder actionBuilder;
-    private Register() { }
+    private Register1() { }
     /**
      * Singleton instance creation using the Builder class ActionBuilder
      * @param movieList
@@ -19,15 +19,15 @@ public final class Register extends ActionBuilder {
      * @param credentials
      * @return
      */
-    public static Register getInstance(final ArrayList<Movie> movieList,
-                                       final ArrayList<User> userList,
-                                       final Credentials credentials) {
+    public static Register1 getInstance(final ArrayList<Movie> movieList,
+                                        final ArrayList<User> userList,
+                                        final Credentials credentials) {
         String country = credentials.getCountry();
 
-        ArrayList<Movie> filteredList = BrowsingUtils.filterCountry(movieList, country);
+        ArrayList<Movie> filteredList = BrowsingUtils1.filterCountry(movieList, country);
 
         if (instance == null) {
-            instance = new Register();
+            instance = new Register1();
 
             actionBuilder = new Builder("register")
                     .movieList(filteredList)
@@ -48,7 +48,7 @@ public final class Register extends ActionBuilder {
     @Override
     public void executeAction() {
 
-        User user = BrowsingUtils.checkUserExistence(actionBuilder.getUserList(),
+        User user = BrowsingUtils1.checkUserExistence(actionBuilder.getUserList(),
                 actionBuilder.getCredentials());
 
         if (user != null) {

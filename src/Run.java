@@ -13,8 +13,6 @@ import java.util.HashMap;
 
 public final class Run {
 
-
-    //ObjectMapper mapper = new ObjectMapper();
     private String currentPage;
     private String previousAction;
     private User currentUser;
@@ -28,17 +26,17 @@ public final class Run {
     public void run(final Input inputData) {
 
         // Initialise all Singleton Classes for each tests
-        Login.setInstance();
-        Register.setInstance();
-        Like.setInstance();
-        RateTheMovie.setInstance();
-        BuyPremiumAccount.setInstance();
-        BuyTokens.setInstance();
-        Filter.setInstance();
-        Search.setInstance();
-        Like.setInstance();
-        Purchase.setInstance();
-        Watch.setInstance();
+        Login1.setInstance();
+        Register1.setInstance();
+        Like1.setInstance();
+        RateTheMovie1.setInstance();
+        BuyPremiumAccount1.setInstance();
+        BuyTokens1.setInstance();
+        Filter1.setInstance();
+        Search1.setInstance();
+        Like1.setInstance();
+        Purchase1.setInstance();
+        Watch1.setInstance();
 
         ArrayList<Action> actionsList = inputData.getActions();
 
@@ -110,9 +108,9 @@ public final class Run {
                if (feature.compareTo("login") == 0) {
                    if (pages.get(currentPage).getNextActions().contains("login")) {
 
-                       movieList = BrowsingUtils.newArr(inputData.getMovies());
+                       movieList = BrowsingUtils1.newArr(inputData.getMovies());
 
-                       currentAction = Login.getInstance(movieList, userList, currentUser,
+                       currentAction = Login1.getInstance(movieList, userList, currentUser,
                                actionInput.getCredentials());
 
                        currentAction.executeAction();
@@ -132,8 +130,8 @@ public final class Run {
 
                    if (pages.get(currentPage).getNextActions().contains("register")) {
 
-                       movieList = BrowsingUtils.newArr(inputData.getMovies());
-                       currentAction = Register.getInstance(movieList, userList,
+                       movieList = BrowsingUtils1.newArr(inputData.getMovies());
+                       currentAction = Register1.getInstance(movieList, userList,
                                actionInput.getCredentials());
 
                        currentAction.executeAction();
@@ -153,7 +151,7 @@ public final class Run {
                } else if (feature.compareTo("search") == 0) {
 
                    if (pages.get(currentPage).getNextActions().contains("search")) {
-                       currentAction = Search.getInstance(notUserBannedMovies, currentUser,
+                       currentAction = Search1.getInstance(notUserBannedMovies, currentUser,
                                actionInput.getStartsWith());
 
                        filteredList = currentAction.getMovieList();
@@ -166,8 +164,8 @@ public final class Run {
                } else if (feature.compareTo("filter") == 0) {
                    if (pages.get(currentPage).getNextActions().contains("filter")) {
 
-                       movieList = BrowsingUtils.newArr(notUserBannedMovies);
-                       currentAction = Filter.getInstance(movieList, currentUser,
+                       movieList = BrowsingUtils1.newArr(notUserBannedMovies);
+                       currentAction = Filter1.getInstance(movieList, currentUser,
                                actionInput.getFilters());
 
                        currentAction.executeAction();
@@ -182,10 +180,10 @@ public final class Run {
                    if (pages.get(currentPage).getNextActions().contains("purchase")) {
 
                        if (actionInput.getMovie() != null) {
-                           currentAction = Purchase.getInstance(filteredList, currentUser,
+                           currentAction = Purchase1.getInstance(filteredList, currentUser,
                                    actionInput.getMovie());
                        } else {
-                           currentAction = Purchase.getInstance(filteredList, currentUser,
+                           currentAction = Purchase1.getInstance(filteredList, currentUser,
                                    filteredList.get(0).getName());
                        }
 
@@ -200,7 +198,7 @@ public final class Run {
                } else if (feature.compareTo("buy tokens") == 0) {
 
                    if (pages.get(currentPage).getNextActions().contains("buy tokens")) {
-                       currentAction = BuyTokens.getInstance(currentUser,
+                       currentAction = BuyTokens1.getInstance(currentUser,
                                Integer.parseInt(actionInput.getCount()));
 
                        currentAction.executeAction();
@@ -214,7 +212,7 @@ public final class Run {
                } else if (feature.compareTo("buy premium account") == 0) {
 
                    if (pages.get(currentPage).getNextActions().contains("buy premium account")) {
-                       currentAction = BuyPremiumAccount.getInstance(currentUser);
+                       currentAction = BuyPremiumAccount1.getInstance(currentUser);
 
                        currentAction.executeAction();
 
@@ -231,10 +229,10 @@ public final class Run {
                            && actions.get(previousAction).getNextActions().contains("watch")) {
 
                        if (actionInput.getMovie() != null) {
-                           currentAction = Watch.getInstance(filteredList, currentUser,
+                           currentAction = Watch1.getInstance(filteredList, currentUser,
                                    actionInput.getMovie());
                        } else {
-                           currentAction = Watch.getInstance(filteredList, currentUser,
+                           currentAction = Watch1.getInstance(filteredList, currentUser,
                                    filteredList.get(0).getName());
                        }
 
@@ -252,17 +250,42 @@ public final class Run {
                            && previousAction != null
                            && actions.get(previousAction).getNextActions().contains("like")) {
 
-                       if (actionInput.getMovie() != null) {
-                           currentAction = Like.getInstance(filteredList, currentUser,
-                                   actionInput.getMovie());
-                       } else {
-                           currentAction = Like.getInstance(filteredList, currentUser,
-                                   filteredList.get(0).getName());
-                       }
+                           actions.get(feature).getAction().execute(currentUser, previousAction,
+                                        actionInput.getMovie(), filteredList,
+                                        userList, actionInput.getStartsWith(),
+                                        actionInput.getCount(), actionInput.getRate(),
+                                        actionInput.getCredentials(), actionInput.getFilters(),
+                                        actionInput.getAddedMovie(), actionInput.getDeletedMovie());
 
-                       currentAction.executeAction();
+//                        if (actionInput.getMovie() != null) {
+//                           like.execute(currentUser, previousAction,
+//                                        actionInput.getMovie(), filteredList,
+//                                        userList, actionInput.getStartsWith(),
+//                                        actionInput.getCount(), actionInput.getRate(),
+//                                        actionInput.getCredentials(), actionInput.getFilters(),
+//                                        actionInput.getAddedMovie(), actionInput.getDeletedMovie());
+////                       } else {
+//                            like.execute(currentUser, previousAction,
+//                                    filteredList.get(0).getName(), filteredList,
+//                                    userList, actionInput.getStartsWith(),
+//                                    actionInput.getCount(), actionInput.getRate(),
+//                                    actionInput.getCredentials(), actionInput.getFilters(),
+//                                    actionInput.getAddedMovie(), actionInput.getDeletedMovie());
+////                       }
 
-                       currentUser = currentAction.getCurrentUser();
+//                        currentUser = like.getActionParameters().getCurrentUser();
+
+//                       if (actionInput.getMovie() != null) {
+//                           currentAction = Like1.getInstance(filteredList, currentUser,
+//                                   actionInput.getMovie());
+//                       } else {
+//                           currentAction = Like1.getInstance(filteredList, currentUser,
+//                                   filteredList.get(0).getName());
+//                       }
+//
+//                       currentAction.executeAction();
+//
+//                       currentUser = currentAction.getCurrentUser();
                        previousAction = "like";
                    } else {
                        WriteUtils.generalError();
@@ -275,11 +298,11 @@ public final class Run {
                            .contains("rate the movie")) {
 
                        if (actionInput.getMovie() != null) {
-                           currentAction = RateTheMovie.getInstance(filteredList, currentUser,
+                           currentAction = RateTheMovie1.getInstance(filteredList, currentUser,
                                    actionInput.getMovie(),
                                    Integer.parseInt(actionInput.getRate()));
                        } else {
-                           currentAction = RateTheMovie.getInstance(filteredList, currentUser,
+                           currentAction = RateTheMovie1.getInstance(filteredList, currentUser,
                                    filteredList.get(0).getName(),
                                    Integer.parseInt(actionInput.getRate()));
                        }

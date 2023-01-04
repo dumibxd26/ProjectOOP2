@@ -5,12 +5,12 @@ import readinput.User;
 
 import java.util.ArrayList;
 
-public final class Search extends ActionBuilder  {
+public final class Search1 extends ActionBuilder  {
 
-    private static Search instance = null;
+    private static Search1 instance = null;
 
     private static ActionBuilder actionBuilder;
-    private Search() { }
+    private Search1() { }
     /**
      * Singleton instance creation using the Builder class ActionBuilder
      * @param movieList
@@ -18,11 +18,11 @@ public final class Search extends ActionBuilder  {
      * @param startsWith
      * @return
      */
-    public static Search getInstance(final ArrayList<Movie> movieList,
-                                     final User currentUser,
-                                     final String startsWith) {
+    public static Search1 getInstance(final ArrayList<Movie> movieList,
+                                      final User currentUser,
+                                      final String startsWith) {
         if (instance == null) {
-            instance = new Search();
+            instance = new Search1();
 
             actionBuilder = new Builder("search")
                     .movieList(movieList)
@@ -49,7 +49,7 @@ public final class Search extends ActionBuilder  {
         ArrayList<Movie> movieList = actionBuilder.getMovieList();
 
         // Make a stream to filter the movies that name's start with the given string
-        movieList = BrowsingUtils.filterStartsWith(movieList, actionBuilder.getStartsWith());
+        movieList = BrowsingUtils1.filterStartsWith(movieList, actionBuilder.getStartsWith());
 
         WriteUtils.noError(movieList, actionBuilder.getCurrentUser());
 

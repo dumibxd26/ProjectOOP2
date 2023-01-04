@@ -2,24 +2,24 @@ package browsingoperations;
 
 import readinput.User;
 
-public final class BuyPremiumAccount extends ActionBuilder  {
+public final class BuyPremiumAccount1 extends ActionBuilder  {
 
     private static final int PREMIUMACCOUNTPRICE = 10;
-    private static BuyPremiumAccount instance = null;
+    private static BuyPremiumAccount1 instance = null;
 
     private static ActionBuilder actionBuilder;
 
-    private BuyPremiumAccount() { }
+    private BuyPremiumAccount1() { }
 
     /**
      * Singleton instance creation using the Builder class ActionBuilder
      * @param currentUser
      * @return
      */
-    public static BuyPremiumAccount getInstance(final User currentUser) {
+    public static BuyPremiumAccount1 getInstance(final User currentUser) {
 
         if (instance == null) {
-            instance = new BuyPremiumAccount();
+            instance = new BuyPremiumAccount1();
             actionBuilder = new Builder("buyPremiumAccount").currentUser(currentUser).build();
         } else {
             actionBuilder.setCurrentUser(currentUser);

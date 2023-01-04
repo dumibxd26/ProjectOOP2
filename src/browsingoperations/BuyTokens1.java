@@ -2,23 +2,23 @@ package browsingoperations;
 
 import readinput.User;
 
-public final class BuyTokens extends ActionBuilder  {
+public final class BuyTokens1 extends ActionBuilder  {
 
-    private static BuyTokens instance = null;
+    private static BuyTokens1 instance = null;
 
     private static ActionBuilder actionBuilder;
 
-    private BuyTokens() { }
+    private BuyTokens1() { }
     /**
      * Singleton instance creation using the Builder class ActionBuilder
      * @param currentUser
      * @param count
      * @return
      */
-    public static BuyTokens getInstance(final User currentUser, final int count) {
+    public static BuyTokens1 getInstance(final User currentUser, final int count) {
 
         if (instance == null) {
-            instance = new BuyTokens();
+            instance = new BuyTokens1();
             actionBuilder = new Builder("buyTokens").currentUser(currentUser).count(count).build();
         } else {
             actionBuilder.setCurrentUser(currentUser);

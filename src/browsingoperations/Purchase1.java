@@ -5,13 +5,13 @@ import readinput.User;
 
 import java.util.ArrayList;
 
-public final class Purchase extends ActionBuilder {
+public final class Purchase1 extends ActionBuilder {
 
-    private static Purchase instance = null;
+    private static Purchase1 instance = null;
 
     private static ActionBuilder actionBuilder;
 
-    private Purchase() { }
+    private Purchase1() { }
     /**
      * Singleton instance creation using the Builder class ActionBuilder
      * @param movieList
@@ -19,12 +19,12 @@ public final class Purchase extends ActionBuilder {
      * @param movieName
      * @return
      */
-    public static Purchase getInstance(final ArrayList<Movie> movieList,
-                                       final User currentUser,
-                                       final String movieName) {
+    public static Purchase1 getInstance(final ArrayList<Movie> movieList,
+                                        final User currentUser,
+                                        final String movieName) {
 
         if (instance == null) {
-            instance = new Purchase();
+            instance = new Purchase1();
             actionBuilder = new Builder("purchase")
                     .movieList(movieList)
                     .currentUser(currentUser)

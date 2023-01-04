@@ -6,9 +6,9 @@ import readinput.User;
 
 import java.util.ArrayList;
 
-public final class Filter extends ActionBuilder  {
+public final class Filter1 extends ActionBuilder  {
 
-    private static Filter instance = null;
+    private static Filter1 instance = null;
     private static ActionBuilder actionBuilder;
 
     /**
@@ -18,11 +18,11 @@ public final class Filter extends ActionBuilder  {
      * @param filter
      * @return
      */
-    public static Filter getInstance(final ArrayList<Movie> movieList,
-                                     final User currentUser,
-                                     final Filters filter) {
+    public static Filter1 getInstance(final ArrayList<Movie> movieList,
+                                      final User currentUser,
+                                      final Filters filter) {
         if (instance == null) {
-            instance = new Filter();
+            instance = new Filter1();
 
             actionBuilder = new Builder("search").movieList(movieList)
                     .filters(filter)
@@ -46,7 +46,7 @@ public final class Filter extends ActionBuilder  {
     @Override
     public void executeAction() {
 
-        ArrayList<Movie> newMovieList = BrowsingUtils.newArr(actionBuilder.getMovieList());
+        ArrayList<Movie> newMovieList = BrowsingUtils1.newArr(actionBuilder.getMovieList());
 
         Filters filters = actionBuilder.getFilters();
 
@@ -54,24 +54,24 @@ public final class Filter extends ActionBuilder  {
             ArrayList<String> actors = filters.getContains().getActors();
             ArrayList<String> genre = filters.getContains().getGenre();
 
-            newMovieList = BrowsingUtils.filterContains(newMovieList, actors, genre);
+            newMovieList = BrowsingUtils1.filterContains(newMovieList, actors, genre);
         }
 
         if (filters.getSort() != null) {
             if (filters.getSort().getRating() != null
                     && filters.getSort().getDuration() == null) {
 
-                newMovieList = BrowsingUtils.sortByRating(newMovieList,
+                newMovieList = BrowsingUtils1.sortByRating(newMovieList,
                         filters.getSort().getRating());
             } else if (filters.getSort().getDuration() != null
                     && filters.getSort().getRating() == null) {
 
-                newMovieList = BrowsingUtils.sortByDuration(newMovieList,
+                newMovieList = BrowsingUtils1.sortByDuration(newMovieList,
                         filters.getSort().getDuration());
             } else if (filters.getSort().getDuration() != null
                     && filters.getSort().getRating() != null) {
 
-                newMovieList = BrowsingUtils.sortByBoth(newMovieList,
+                newMovieList = BrowsingUtils1.sortByBoth(newMovieList,
                         filters.getSort().getRating(), filters.getSort().getDuration());
             }
         }

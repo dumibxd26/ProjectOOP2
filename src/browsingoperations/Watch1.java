@@ -5,13 +5,13 @@ import readinput.User;
 
 import java.util.ArrayList;
 
-public final class Watch extends ActionBuilder  {
+public final class Watch1 extends ActionBuilder  {
 
-    private static Watch instance = null;
+    private static Watch1 instance = null;
 
     private static ActionBuilder actionBuilder;
 
-    private Watch() { }
+    private Watch1() { }
     /**
      * Singleton instance creation using the Builder class ActionBuilder
      * @param movieList
@@ -19,12 +19,12 @@ public final class Watch extends ActionBuilder  {
      * @param movieName
      * @return
      */
-    public static Watch getInstance(final ArrayList<Movie> movieList,
-                                    final User currentUser,
-                                    final String movieName) {
+    public static Watch1 getInstance(final ArrayList<Movie> movieList,
+                                     final User currentUser,
+                                     final String movieName) {
 
         if (instance == null) {
-            instance = new Watch();
+            instance = new Watch1();
             actionBuilder = new Builder("watch")
                     .movieList(movieList)
                     .currentUser(currentUser)

@@ -2,14 +2,15 @@ package initializations;
 
 import java.util.HashSet;
 import browsingoperations.ActionBuilder;
+import browsingoperations.ActionExec;
 
 public class ActionInfo {
 
     private final HashSet<String> nextActions;
-    private final ActionBuilder action;
+    private final ActionExec action;
 
     public ActionInfo(final HashSet<String> nextActions,
-                      final ActionBuilder action) {
+                      final ActionExec action) {
         this.nextActions = nextActions;
         this.action = action;
     }
@@ -18,7 +19,7 @@ public class ActionInfo {
      * Getter for the next actions
      * @return
      */
-    public ActionBuilder getAction() {
+    public ActionExec getAction() {
         return action;
     }
 

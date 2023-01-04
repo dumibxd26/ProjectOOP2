@@ -5,67 +5,62 @@ import readinput.User;
 
 import java.util.ArrayList;
 
-public final class RateTheMovie extends ActionBuilder {
+public final class Like1 extends ActionBuilder {
 
-    private static final int MINIMUM_RATING = 1;
-    private static final int MAXIMUM_RATING = 5;
-    private static RateTheMovie instance = null;
+    private static Like1 instance = null;
 
     private static ActionBuilder actionBuilder;
 
-    private RateTheMovie() { }
+    private Like1() { }
+
     /**
      * Singleton instance creation using the Builder class ActionBuilder
      * @param movieList
      * @param currentUser
      * @param movieName
-     * @param rate
      * @return
      */
-    public static RateTheMovie getInstance(final ArrayList<Movie> movieList,
-                                           final User currentUser,
-                                           final String movieName,
-                                           final int rate) {
+    public static Like1 getInstance(final ArrayList<Movie> movieList,
+                                    final User currentUser,
+                                    final String movieName) {
 
         if (instance == null) {
-            instance = new RateTheMovie();
-            actionBuilder = new Builder("rating")
+            instance = new Like1();
+            actionBuilder = new Builder("like")
                     .movieList(movieList)
                     .currentUser(currentUser)
                     .currentMovie(movieName)
-                    .rate(rate)
                     .build();
         } else {
             actionBuilder.setMovieList(movieList);
             actionBuilder.setCurrentUser(currentUser);
             actionBuilder.setCurrentMovie(movieName);
-            actionBuilder.setRate(rate);
         }
 
         return instance;
     }
 
+    /**
+     * Check if the movie valid(this is because of a test case error)
+     * and like it
+     */
     @Override
     public void executeAction() {
 
         Movie selectedMovie = actionBuilder.getMovieList().get(0);
         instance.setCurrentUser(actionBuilder.getCurrentUser());
 
-        if (actionBuilder.getCurrentMovie().compareTo(selectedMovie.getName()) == 0
-                && actionBuilder.getRate() >= MINIMUM_RATING
-                && actionBuilder.getRate() <= MAXIMUM_RATING) {
+        if (actionBuilder.getCurrentMovie().compareTo(selectedMovie.getName()) == 0) {
 
-            instance.getCurrentUser().getRatedMovies().add(selectedMovie);
-            selectedMovie.setRating(actionBuilder.getRate() + selectedMovie.getRating());
-            selectedMovie.setNumRatings(selectedMovie.getNumRatings() + 1);
+            instance.getCurrentUser().getLikedMovies().add(selectedMovie);
+
+            selectedMovie.setNumLikes(selectedMovie.getNumLikes() + 1);
 
             WriteUtils.noError(actionBuilder.getMovieList(), instance.getCurrentUser());
 
         } else {
             WriteUtils.generalError();
         }
-
-        instance.setCurrentUser(actionBuilder.getCurrentUser());
     }
     /**
      * Set the instance to null (because multiple tests are running in parralel)
@@ -73,5 +68,4 @@ public final class RateTheMovie extends ActionBuilder {
     public static void setInstance() {
         instance = null;
     }
-
 }

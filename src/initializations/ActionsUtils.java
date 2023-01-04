@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import readinput.Movie;
+import browsingoperations.ActionBuilder;
+import browsingoperations.ActionExec;
+
 
 // Maybe, in the future, actions can be implemented with
 // other previous actions before, and this makes the job easier.
@@ -96,7 +99,9 @@ public final class ActionsUtils {
 
         registerSetNext.add("rate the movie");
 
-        ActionInfo actionInfo = new ActionInfo(registerSetNext, null);
+        ActionExec action = ActionExec.ActionFactory.createAction("Like");
+
+        ActionInfo actionInfo = new ActionInfo(registerSetNext, action);
 
         return actionInfo;
     }

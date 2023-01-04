@@ -7,7 +7,6 @@ import readinput.Filters;
 import java.util.ArrayList;
 
 public class ActionBuilder {
-
     private String name;
     private User currentUser;
     private String previousAction;

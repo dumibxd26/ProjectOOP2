@@ -6,11 +6,11 @@ import readinput.User;
 
 import java.util.ArrayList;
 
-public final class Login extends ActionBuilder {
+public final class Login1 extends ActionBuilder {
 
-    private static Login instance = null;
+    private static Login1 instance = null;
     private static ActionBuilder actionBuilder;
-    private Login() { }
+    private Login1() { }
 
     /**
      * Singleton instance creation using the Builder class ActionBuilder
@@ -20,13 +20,13 @@ public final class Login extends ActionBuilder {
      * @param credentials
      * @return
      */
-    public static Login getInstance(final ArrayList<Movie> movieList,
-                                    final ArrayList<User> userList,
-                                    final User currentUser,
-                                    final Credentials credentials) {
+    public static Login1 getInstance(final ArrayList<Movie> movieList,
+                                     final ArrayList<User> userList,
+                                     final User currentUser,
+                                     final Credentials credentials) {
 
         if (instance == null) {
-            instance = new Login();
+            instance = new Login1();
 
             actionBuilder = new Builder("login")
                     .movieList(movieList)
@@ -52,7 +52,7 @@ public final class Login extends ActionBuilder {
     @Override
     public void executeAction() {
 
-        User user = BrowsingUtils.checkUserExistence(actionBuilder.getUserList(),
+        User user = BrowsingUtils1.checkUserExistence(actionBuilder.getUserList(),
                 actionBuilder.getCredentials());
 
         if (user != null && actionBuilder.getCurrentUser() == null) {
@@ -60,7 +60,7 @@ public final class Login extends ActionBuilder {
 
             String country = user.getCredentials().getCountry();
 
-            ArrayList<Movie> filteredList = BrowsingUtils
+            ArrayList<Movie> filteredList = BrowsingUtils1
                     .filterCountry(actionBuilder.getMovieList(), country);
 
             instance.setMovieList(filteredList);
