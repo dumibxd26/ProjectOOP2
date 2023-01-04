@@ -1,0 +1,23 @@
+Starting audit...
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\browsingoperations\ActionBuilder.java:145:27: Parameter builder should be final. [FinalParameters]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\browsingoperations\ActionBuilder.java:170:25: Parameter name should be final. [FinalParameters]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\browsingoperations\ActionBuilder.java:184:32: Parameter currentUser should be final. [FinalParameters]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\browsingoperations\ActionBuilder.java:198:35: Parameter previousAction should be final. [FinalParameters]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\browsingoperations\ActionBuilder.java:212:33: Parameter currentMovie should be final. [FinalParameters]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\browsingoperations\ActionBuilder.java:226:30: Parameter movieList should be final. [FinalParameters]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\browsingoperations\ActionBuilder.java:240:29: Parameter userList should be final. [FinalParameters]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\browsingoperations\ActionBuilder.java:254:31: Parameter startsWith should be final. [FinalParameters]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\browsingoperations\ActionBuilder.java:268:26: Parameter count should be final. [FinalParameters]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\browsingoperations\ActionBuilder.java:282:25: Parameter rate should be final. [FinalParameters]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\browsingoperations\ActionBuilder.java:296:32: Parameter credentials should be final. [FinalParameters]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\browsingoperations\ActionBuilder.java:310:28: Parameter filters should be final. [FinalParameters]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\initializations\ActionsUtils.java:15:36: Variable 'movieList' must be private and have accessor methods. [VisibilityModifier]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\readinput\Filters.java:21:29: Parameter contains should be final. [FinalParameters]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\readinput\User.java:36:32: Parameter tokensCount should be final. [FinalParameters]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\Run.java:1:26: Using the '.*' form of import should be avoided - browsingoperations.*. [AvoidStarImport]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\Run.java:28:5: Method length is 271 lines (max allowed is 150). [MethodLength]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\Run.java:122:63: Inner assignments should be avoided. [InnerAssignment]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\Run.java:146:63: Inner assignments should be avoided. [InnerAssignment]
+[ERROR] C:\Users\bogda\OneDrive\Desktop\ProjectPart1OOP\.\src\Test.java:9:28: Using the '.*' form of import should be avoided - java.util.concurrent.*. [AvoidStarImport]
+Audit done.
+Checkstyle ends with 20 errors.
