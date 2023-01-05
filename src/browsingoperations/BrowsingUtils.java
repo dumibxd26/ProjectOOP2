@@ -6,9 +6,9 @@ import readinput.Credentials;
 
 import java.util.ArrayList;
 
-public final class BrowsingUtils1 {
+public final class BrowsingUtils {
 
-    private BrowsingUtils1() { }
+    private BrowsingUtils() { }
 
     /**
      * Checks if the user exists in the database

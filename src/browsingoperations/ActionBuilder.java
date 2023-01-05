@@ -10,32 +10,24 @@ public class ActionBuilder {
     private String name;
     private User currentUser;
     private String previousAction;
-    private String currentMovie;
+    private String currentPage;
     private ArrayList<Movie> movieList;
+    private ArrayList<Movie> filteredList;
+    private ArrayList<Movie> notUserBannedMovies;
     private ArrayList<User> userList;
-    private String startsWith;
-    private int count;
-    private int rate;
-    private Credentials credentials;
-    private Filters filters;
 
     public ActionBuilder() { }
 
     public static final class Builder {
 
         private final String name;
-        private User currentUser;
+        private User currentUser = null;
         private ArrayList<Movie> movieList;
-        private ArrayList<User> userList;
-
+        private ArrayList<Movie> filteredList = null;
+        private ArrayList<Movie> notUserBannedMovies = null;
+        private ArrayList<User> userList = null;
         private String previousAction = null;
-        private String currentMovie = null;
-        private String startsWith;
-        private int count;
-        private int rate;
-        private Credentials credentials;
-        private Filters filters;
-
+        private String currentPage = null;
         public Builder(final String name) {
             this.name = name;
         }
@@ -60,15 +52,6 @@ public class ActionBuilder {
             return this;
         }
         /**
-         * Builder function for currentUser
-         * @param currentUserParam
-         * @return
-         */
-        public Builder currentUser(final User currentUserParam) {
-            this.currentUser = currentUserParam;
-            return this;
-        }
-        /**
          * Builder function for previousAction
          * @param previousActionParam
          * @return
@@ -77,59 +60,40 @@ public class ActionBuilder {
             this.previousAction = previousActionParam;
             return this;
         }
-
         /**
-         * Builder function for currentMovie
-         * @param currentMovieParam
+         * Builder function for filteredList
+         * @param filteredListParam
          * @return
          */
-        public Builder currentMovie(final String currentMovieParam) {
-            this.currentMovie = currentMovieParam;
+        public Builder filteredList(final ArrayList<Movie> filteredListParam) {
+            this.filteredList = filteredListParam;
             return this;
         }
         /**
-         * Builder function for startsWith
-         * @param startsWithParam
+         * Builder function for notUserBannedMovies
+         * @param notUserBannedMoviesParam
          * @return
          */
-        public Builder startsWith(final String startsWithParam) {
-            this.startsWith = startsWithParam;
+        public Builder notUserBannedMovies(final ArrayList<Movie> notUserBannedMoviesParam) {
+            this.notUserBannedMovies = notUserBannedMoviesParam;
             return this;
         }
         /**
-         * Builder function for count
-         * @param countParam
+         * Builder function for currentPage
+         * @param currentPageParam
          * @return
          */
-        public Builder count(final int countParam) {
-            this.count = countParam;
+        public Builder currentPage(final String currentPageParam) {
+            this.currentPage = currentPageParam;
             return this;
         }
         /**
-         * Builder function for rate
-         * @param rateParam
+         * Builder function for currentUser
+         * @param currentUserParam
          * @return
          */
-        public Builder rate(final int rateParam) {
-            this.rate = rateParam;
-            return this;
-        }
-        /**
-         * Builder function for credentials
-         * @param credentialsParam
-         * @return
-         */
-        public Builder credentials(final Credentials credentialsParam) {
-            this.credentials = credentialsParam;
-            return this;
-        }
-        /**
-         * Builder function for filters
-         * @param filtersParam
-         * @return
-         */
-        public Builder filters(final Filters filtersParam) {
-            this.filters = filtersParam;
+        public Builder currentUser(final User currentUserParam) {
+            this.currentUser = currentUserParam;
             return this;
         }
         /**
@@ -143,16 +107,13 @@ public class ActionBuilder {
 
     private ActionBuilder(Builder builder) {
         this.name = builder.name;
-        this.currentUser = builder.currentUser;
         this.previousAction = builder.previousAction;
-        this.currentMovie = builder.currentMovie;
         this.movieList = builder.movieList;
         this.userList = builder.userList;
-        this.startsWith = builder.startsWith;
-        this.count = builder.count;
-        this.rate = builder.rate;
-        this.credentials = builder.credentials;
-        this.filters = builder.filters;
+        this.filteredList = builder.filteredList;
+        this.notUserBannedMovies = builder.notUserBannedMovies;
+        this.currentPage = builder.currentPage;
+        this.currentUser = builder.currentUser;
     }
 
     /**
@@ -198,20 +159,6 @@ public class ActionBuilder {
         this.previousAction = previousAction;
     }
     /**
-     * Getter for currentMovie
-     * @return
-     */
-    public String getCurrentMovie() {
-        return currentMovie;
-    }
-    /**
-     * Setter for movieList
-     * @return
-     */
-    public void setCurrentMovie(String currentMovie) {
-        this.currentMovie = currentMovie;
-    }
-    /**
      * Getter for movieList
      * @return
      */
@@ -239,79 +186,29 @@ public class ActionBuilder {
     public void setUserList(ArrayList<User> userList) {
         this.userList = userList;
     }
-    /**
-     * Getter for startsWith
-     * @return
-     */
-    public String getStartsWith() {
-        return startsWith;
+
+    public ArrayList<Movie> getFilteredList() {
+        return filteredList;
     }
-    /**
-     * Setter for count
-     * @return
-     */
-    public void setStartsWith(String startsWith) {
-        this.startsWith = startsWith;
+
+    public void setFilteredList(ArrayList<Movie> filteredList) {
+        this.filteredList = filteredList;
     }
-    /**
-     * Getter for count
-     * @return
-     */
-    public int getCount() {
-        return count;
+
+    public ArrayList<Movie> getNotUserBannedMovies() {
+        return notUserBannedMovies;
     }
-    /**
-     * Setter for rate
-     * @return
-     */
-    public void setCount(int count) {
-        this.count = count;
+
+    public void setNotUserBannedMovies(ArrayList<Movie> notUserBannedMovies) {
+        this.notUserBannedMovies = notUserBannedMovies;
     }
-    /**
-     * Getter for rate
-     * @return
-     */
-    public int getRate() {
-        return rate;
+
+    public String getCurrentPage() {
+        return currentPage;
     }
-    /**
-     * Setter for credentials
-     * @return
-     */
-    public void setRate(int rate) {
-        this.rate = rate;
+
+    public void setCurrentPage(String currentPage) {
+        this.currentPage = currentPage;
     }
-    /**
-     * Getter for credentials
-     * @return
-     */
-    public Credentials getCredentials() {
-        return credentials;
-    }
-    /**
-     * Setter for filters
-     * @return
-     */
-    public void setCredentials(Credentials credentials) {
-        this.credentials = credentials;
-    }
-    /**
-     * Getter for filters
-     * @return
-     */
-    public Filters getFilters() {
-        return filters;
-    }
-    /**
-     * Setter for filters
-     * @return
-     */
-    public void setFilters(Filters filters) {
-        this.filters = filters;
-    }
-    /**
-     * Inheritence function
-     */
-    public void executeAction() { }
 
 }

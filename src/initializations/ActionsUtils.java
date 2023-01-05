@@ -24,7 +24,9 @@ public final class ActionsUtils {
     public static ActionInfo createLogin() {
         HashSet<String> loginSetNext = new HashSet<String>();
 
-        ActionInfo actionInfo = new ActionInfo(loginSetNext, null);
+        ActionExec action = ActionExec.ActionFactory.createAction("login");
+
+        ActionInfo actionInfo = new ActionInfo(loginSetNext, action);
 
         return actionInfo;
     }
@@ -35,7 +37,10 @@ public final class ActionsUtils {
      */
     public static ActionInfo createRegister() {
         HashSet<String> registerSetNext = new HashSet<String>();
-        ActionInfo actionInfo = new ActionInfo(registerSetNext, null);
+
+        ActionExec action = ActionExec.ActionFactory.createAction("register");
+
+        ActionInfo actionInfo = new ActionInfo(registerSetNext, action);
 
         return actionInfo;
     }
@@ -46,7 +51,10 @@ public final class ActionsUtils {
      */
     public static ActionInfo createSearch() {
         HashSet<String> searchSetNext = new HashSet<String>();
-        ActionInfo actionInfo = new ActionInfo(searchSetNext, null);
+
+        ActionExec action = ActionExec.ActionFactory.createAction("search");
+
+        ActionInfo actionInfo = new ActionInfo(searchSetNext, action);
 
         return actionInfo;
     }
@@ -56,7 +64,9 @@ public final class ActionsUtils {
      */
     public static ActionInfo createFilter() {
         HashSet<String> filterSetNext = new HashSet<String>();
-        ActionInfo actionInfo = new ActionInfo(filterSetNext, null);
+
+        ActionExec action = ActionExec.ActionFactory.createAction("filter");
+        ActionInfo actionInfo = new ActionInfo(filterSetNext, action);
 
         return actionInfo;
     }
@@ -70,7 +80,8 @@ public final class ActionsUtils {
 
         purchaseNext.add("watch");
 
-        ActionInfo actionInfo = new ActionInfo(purchaseNext, null);
+        ActionExec action = ActionExec.ActionFactory.createAction("purchase");
+        ActionInfo actionInfo = new ActionInfo(purchaseNext, action);
 
         return actionInfo;
     }
@@ -83,9 +94,10 @@ public final class ActionsUtils {
         HashSet<String> watchNext = new HashSet<String>();
 
         watchNext.add("like");
-        watchNext.add("rate the movie");
+        watchNext.add("rate");
 
-        ActionInfo actionInfo = new ActionInfo(watchNext, null);
+        ActionExec action = ActionExec.ActionFactory.createAction("watch");
+        ActionInfo actionInfo = new ActionInfo(watchNext, action);
 
         return actionInfo;
     }
@@ -97,9 +109,9 @@ public final class ActionsUtils {
     public static ActionInfo createLike() {
         HashSet<String> registerSetNext = new HashSet<String>();
 
-        registerSetNext.add("rate the movie");
+        registerSetNext.add("rate");
 
-        ActionExec action = ActionExec.ActionFactory.createAction("Like");
+        ActionExec action = ActionExec.ActionFactory.createAction("like");
 
         ActionInfo actionInfo = new ActionInfo(registerSetNext, action);
 
@@ -109,12 +121,13 @@ public final class ActionsUtils {
      * Method to initialise the Rate Action
      * @return
      */
-    public static ActionInfo createRateTheMovie() {
+    public static ActionInfo createRate() {
         HashSet<String> rateMovieNext = new HashSet<String>();
 
         rateMovieNext.add("like");
 
-        ActionInfo actionInfo = new ActionInfo(rateMovieNext, null);
+        ActionExec action = ActionExec.ActionFactory.createAction("rate");
+        ActionInfo actionInfo = new ActionInfo(rateMovieNext, action);
 
         return actionInfo;
     }
@@ -124,7 +137,9 @@ public final class ActionsUtils {
      */
     public static ActionInfo createBuyPremiumAccount() {
         HashSet<String> buyPremiumAccountNext = new HashSet<String>();
-        ActionInfo actionInfo = new ActionInfo(buyPremiumAccountNext, null);
+
+        ActionExec action = ActionExec.ActionFactory.createAction("buy premium account");
+        ActionInfo actionInfo = new ActionInfo(buyPremiumAccountNext, action);
 
         return actionInfo;
     }
@@ -134,7 +149,9 @@ public final class ActionsUtils {
      */
     public static ActionInfo createBuyTokens() {
         HashSet<String> buyTokensNext = new HashSet<String>();
-        ActionInfo actionInfo = new ActionInfo(buyTokensNext, null);
+
+        ActionExec action = ActionExec.ActionFactory.createAction("buy tokens");
+        ActionInfo actionInfo = new ActionInfo(buyTokensNext, action);
 
         return actionInfo;
     }
@@ -155,7 +172,7 @@ public final class ActionsUtils {
         actions.put("purchase", createPurchase());
         actions.put("watch", createWatch());
         actions.put("like", createLike());
-        actions.put("rate the movie", createRateTheMovie());
+        actions.put("rate", createRate());
         actions.put("buy premium account", createBuyPremiumAccount());
         actions.put("buy tokens", createBuyTokens());
 

@@ -9,9 +9,9 @@ import readinput.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Like extends ActionExec {
+public class Search extends ActionExec{
 
-    public Like() { }
+    public Search() { }
 
     @Override
     public void execute(final User currentUser, final String previousAction,
@@ -23,32 +23,20 @@ public class Like extends ActionExec {
                         final String deletedMovie, final String currentPage,
                         HashMap<String, ActionInfo> actions) {
 
-        if (previousAction == null
-                || actions.get(previousAction).getNextActions().contains("like") == false) {
-            WriteUtils.generalError();
-            return;
-        }
+        ArrayList<Movie> filteredListFunc = BrowsingUtils.filterStartsWith(filteredList, startsWith);
 
-        Movie selectedMovie = filteredList.get(0);
-
-        if (currentMovie != null && selectedMovie.getName().compareTo(currentMovie) != 0) {
-            WriteUtils.generalError();
-            return;
-        }
-
-        currentUser.getLikedMovies().add(selectedMovie);
-        selectedMovie.setNumLikes(selectedMovie.getNumLikes() + 1);
-
-        WriteUtils.noError(filteredList, currentUser);
+        WriteUtils.noError(filteredListFunc, currentUser);
 
         if (actionParameters == null) {
-            actionParameters = new ActionBuilder.Builder("like")
-                    .previousAction("like")
-                    .filteredList(filteredList)
+            actionParameters = new ActionBuilder.Builder("search")
+                    .currentUser(currentUser)
+                    .filteredList(filteredListFunc)
+                    .previousAction("search")
                     .build();
         } else {
-            actionParameters.setPreviousAction("like");
-            actionParameters.setFilteredList(filteredList);
+            actionParameters.setCurrentUser(currentUser);
+            actionParameters.setFilteredList(filteredListFunc);
+            actionParameters.setPreviousAction("search");
         }
     }
 }

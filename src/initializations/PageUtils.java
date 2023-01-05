@@ -108,7 +108,7 @@ public final class PageUtils {
         upgradesPageSetNext.add("purchase");
         upgradesPageSetNext.add("watch");
         upgradesPageSetNext.add("like");
-        upgradesPageSetNext.add("rate the movie");
+        upgradesPageSetNext.add("rate");
 
         PageInfo seeDetailsInfo = new PageInfo(seeDetailsSetNext, upgradesPageSetNext);
 

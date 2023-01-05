@@ -9,9 +9,9 @@ import readinput.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Like extends ActionExec {
+public class Watch extends ActionExec{
 
-    public Like() { }
+    public Watch() { }
 
     @Override
     public void execute(final User currentUser, final String previousAction,
@@ -24,31 +24,28 @@ public class Like extends ActionExec {
                         HashMap<String, ActionInfo> actions) {
 
         if (previousAction == null
-                || actions.get(previousAction).getNextActions().contains("like") == false) {
+                || actions.get(previousAction).getNextActions().contains("watch") == false) {
             WriteUtils.generalError();
             return;
         }
 
-        Movie selectedMovie = filteredList.get(0);
+        Movie movie = filteredList.get(0);
 
-        if (currentMovie != null && selectedMovie.getName().compareTo(currentMovie) != 0) {
+        if (currentMovie != null && currentMovie.compareTo(movie.getName()) != 0) {
             WriteUtils.generalError();
             return;
         }
 
-        currentUser.getLikedMovies().add(selectedMovie);
-        selectedMovie.setNumLikes(selectedMovie.getNumLikes() + 1);
-
+        currentUser.getWatchedMovies().add(movie);
         WriteUtils.noError(filteredList, currentUser);
 
         if (actionParameters == null) {
-            actionParameters = new ActionBuilder.Builder("like")
-                    .previousAction("like")
-                    .filteredList(filteredList)
+            actionParameters = new ActionBuilder.Builder("watch")
+                    .previousAction("watch")
                     .build();
+
         } else {
-            actionParameters.setPreviousAction("like");
-            actionParameters.setFilteredList(filteredList);
+            actionParameters.setPreviousAction("watch");
         }
     }
 }

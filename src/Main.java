@@ -18,6 +18,8 @@ public final class Main {
 
     public static void main(final String[] args) throws IOException {
 
+//        if (args[0].compareTo("/Users/dumib/Dev/ProjectOOP2/checker/resources/in/basic_6.json") == 0) {
+
             ObjectMapper mapper = new ObjectMapper();
 
             ObjMapper objMapper = ObjMapper.getInstance();
@@ -29,5 +31,6 @@ public final class Main {
 
             ObjectWriter objectWriter = objMapper.getMapper().writerWithDefaultPrettyPrinter();
             objectWriter.writeValue(new File(args[1]), objMapper.getOutput());
+//        }
     }
 }

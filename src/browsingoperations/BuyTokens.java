@@ -9,9 +9,9 @@ import readinput.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Like extends ActionExec {
+public class BuyTokens extends ActionExec{
 
-    public Like() { }
+    public BuyTokens() { }
 
     @Override
     public void execute(final User currentUser, final String previousAction,
@@ -23,32 +23,23 @@ public class Like extends ActionExec {
                         final String deletedMovie, final String currentPage,
                         HashMap<String, ActionInfo> actions) {
 
-        if (previousAction == null
-                || actions.get(previousAction).getNextActions().contains("like") == false) {
+        int balance = Integer.parseInt(currentUser.getCredentials().getBalance());
+
+        if (Integer.parseInt(count) > balance) {
             WriteUtils.generalError();
             return;
         }
 
-        Movie selectedMovie = filteredList.get(0);
-
-        if (currentMovie != null && selectedMovie.getName().compareTo(currentMovie) != 0) {
-            WriteUtils.generalError();
-            return;
-        }
-
-        currentUser.getLikedMovies().add(selectedMovie);
-        selectedMovie.setNumLikes(selectedMovie.getNumLikes() + 1);
-
-        WriteUtils.noError(filteredList, currentUser);
+        currentUser.setTokensCount(currentUser.getTokensCount() + Integer.parseInt(count));
+        currentUser.getCredentials().setBalance(String.valueOf(balance - Integer.parseInt(count)));
 
         if (actionParameters == null) {
-            actionParameters = new ActionBuilder.Builder("like")
-                    .previousAction("like")
-                    .filteredList(filteredList)
+            actionParameters = new ActionBuilder.Builder("buy tokens")
+                    .currentUser(currentUser)
                     .build();
         } else {
-            actionParameters.setPreviousAction("like");
-            actionParameters.setFilteredList(filteredList);
+            actionParameters.setCurrentUser(currentUser);
         }
+
     }
 }

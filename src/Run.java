@@ -25,19 +25,6 @@ public final class Run {
      */
     public void run(final Input inputData) {
 
-        // Initialise all Singleton Classes for each tests
-        Login1.setInstance();
-        Register1.setInstance();
-        Like1.setInstance();
-        RateTheMovie1.setInstance();
-        BuyPremiumAccount1.setInstance();
-        BuyTokens1.setInstance();
-        Filter1.setInstance();
-        Search1.setInstance();
-        Like1.setInstance();
-        Purchase1.setInstance();
-        Watch1.setInstance();
-
         ArrayList<Action> actionsList = inputData.getActions();
 
         ArrayList<Movie> movieList = inputData.getMovies();
@@ -103,219 +90,46 @@ public final class Run {
            } else {
                String feature = actionInput.getFeature();
 
-                ActionBuilder currentAction;
-
-               if (feature.compareTo("login") == 0) {
-                   if (pages.get(currentPage).getNextActions().contains("login")) {
-
-                       movieList = BrowsingUtils1.newArr(inputData.getMovies());
-
-                       currentAction = Login1.getInstance(movieList, userList, currentUser,
-                               actionInput.getCredentials());
-
-                       currentAction.executeAction();
-                       currentUser = currentAction.getCurrentUser();
-                       if (currentUser != null) {
-
-                           filteredList = notUserBannedMovies = currentAction.getMovieList();
-                           currentPage = "homepage autentificat";
-
-                           previousAction = "login";
-                       }
-                   } else {
-                       WriteUtils.generalError();
-                   }
-
-               } else if (feature.compareTo("register") == 0) {
-
-                   if (pages.get(currentPage).getNextActions().contains("register")) {
-
-                       movieList = BrowsingUtils1.newArr(inputData.getMovies());
-                       currentAction = Register1.getInstance(movieList, userList,
-                               actionInput.getCredentials());
-
-                       currentAction.executeAction();
-
-                       currentUser = currentAction.getCurrentUser();
-                       userList = currentAction.getUserList();
-
-                       if (currentUser != null) {
-                           currentPage = "homepage autentificat";
-                           filteredList = notUserBannedMovies = currentAction.getMovieList();
-
-                           previousAction = "register";
-                       }
-                   } else {
-                       WriteUtils.generalError();
-                   }
-               } else if (feature.compareTo("search") == 0) {
-
-                   if (pages.get(currentPage).getNextActions().contains("search")) {
-                       currentAction = Search1.getInstance(notUserBannedMovies, currentUser,
-                               actionInput.getStartsWith());
-
-                       filteredList = currentAction.getMovieList();
-
-                       currentAction.executeAction();
-                       previousAction = "search";
-                   } else {
-                       WriteUtils.generalError();
-                   }
-               } else if (feature.compareTo("filter") == 0) {
-                   if (pages.get(currentPage).getNextActions().contains("filter")) {
-
-                       movieList = BrowsingUtils1.newArr(notUserBannedMovies);
-                       currentAction = Filter1.getInstance(movieList, currentUser,
-                               actionInput.getFilters());
-
-                       currentAction.executeAction();
-
-                       filteredList = currentAction.getMovieList();
-                       previousAction = "filter";
-                   } else {
-                       WriteUtils.generalError();
-                   }
-               } else if (feature.compareTo("purchase") == 0) {
-
-                   if (pages.get(currentPage).getNextActions().contains("purchase")) {
-
-                       if (actionInput.getMovie() != null) {
-                           currentAction = Purchase1.getInstance(filteredList, currentUser,
-                                   actionInput.getMovie());
-                       } else {
-                           currentAction = Purchase1.getInstance(filteredList, currentUser,
-                                   filteredList.get(0).getName());
-                       }
-
-                       currentAction.executeAction();
-
-                       currentUser = currentAction.getCurrentUser();
-
-                       previousAction = "purchase";
-                   } else {
-                       WriteUtils.generalError();
-                   }
-               } else if (feature.compareTo("buy tokens") == 0) {
-
-                   if (pages.get(currentPage).getNextActions().contains("buy tokens")) {
-                       currentAction = BuyTokens1.getInstance(currentUser,
-                               Integer.parseInt(actionInput.getCount()));
-
-                       currentAction.executeAction();
-
-                       currentUser = currentAction.getCurrentUser();
-
-                       previousAction = "buy tokens";
-                   } else {
-                       WriteUtils.generalError();
-                   }
-               } else if (feature.compareTo("buy premium account") == 0) {
-
-                   if (pages.get(currentPage).getNextActions().contains("buy premium account")) {
-                       currentAction = BuyPremiumAccount1.getInstance(currentUser);
-
-                       currentAction.executeAction();
-
-                       currentUser = currentAction.getCurrentUser();
-
-                       previousAction = "buy premium account";
-                   } else {
-                       WriteUtils.generalError();
-                   }
-               } else if (feature.compareTo("watch") == 0) {
-                    // Check if the movie was purchased first
-                   if (pages.get(currentPage).getNextActions().contains("watch")
-                           && previousAction != null
-                           && actions.get(previousAction).getNextActions().contains("watch")) {
-
-                       if (actionInput.getMovie() != null) {
-                           currentAction = Watch1.getInstance(filteredList, currentUser,
-                                   actionInput.getMovie());
-                       } else {
-                           currentAction = Watch1.getInstance(filteredList, currentUser,
-                                   filteredList.get(0).getName());
-                       }
-
-                       currentAction.executeAction();
-
-                       currentUser = currentAction.getCurrentUser();
-
-                       previousAction = "watch";
-                   } else {
-                       WriteUtils.generalError();
-                   }
-               } else if (feature.compareTo("like") == 0) {
-                    // Check if the movie was watched first
-                   if (pages.get(currentPage).getNextActions().contains("like")
-                           && previousAction != null
-                           && actions.get(previousAction).getNextActions().contains("like")) {
-
-                           actions.get(feature).getAction().execute(currentUser, previousAction,
-                                        actionInput.getMovie(), filteredList,
-                                        userList, actionInput.getStartsWith(),
-                                        actionInput.getCount(), actionInput.getRate(),
-                                        actionInput.getCredentials(), actionInput.getFilters(),
-                                        actionInput.getAddedMovie(), actionInput.getDeletedMovie());
-
-//                        if (actionInput.getMovie() != null) {
-//                           like.execute(currentUser, previousAction,
-//                                        actionInput.getMovie(), filteredList,
-//                                        userList, actionInput.getStartsWith(),
-//                                        actionInput.getCount(), actionInput.getRate(),
-//                                        actionInput.getCredentials(), actionInput.getFilters(),
-//                                        actionInput.getAddedMovie(), actionInput.getDeletedMovie());
-////                       } else {
-//                            like.execute(currentUser, previousAction,
-//                                    filteredList.get(0).getName(), filteredList,
-//                                    userList, actionInput.getStartsWith(),
-//                                    actionInput.getCount(), actionInput.getRate(),
-//                                    actionInput.getCredentials(), actionInput.getFilters(),
-//                                    actionInput.getAddedMovie(), actionInput.getDeletedMovie());
-////                       }
-
-//                        currentUser = like.getActionParameters().getCurrentUser();
-
-//                       if (actionInput.getMovie() != null) {
-//                           currentAction = Like1.getInstance(filteredList, currentUser,
-//                                   actionInput.getMovie());
-//                       } else {
-//                           currentAction = Like1.getInstance(filteredList, currentUser,
-//                                   filteredList.get(0).getName());
-//                       }
-//
-//                       currentAction.executeAction();
-//
-//                       currentUser = currentAction.getCurrentUser();
-                       previousAction = "like";
-                   } else {
-                       WriteUtils.generalError();
-                   }
-               } else if (feature.compareTo("rate") == 0) {
-                    // check if the movie was watched first
-                   if (pages.get(currentPage).getNextActions().contains("rate the movie")
-                           && previousAction != null
-                           && actions.get(previousAction).getNextActions()
-                           .contains("rate the movie")) {
-
-                       if (actionInput.getMovie() != null) {
-                           currentAction = RateTheMovie1.getInstance(filteredList, currentUser,
-                                   actionInput.getMovie(),
-                                   Integer.parseInt(actionInput.getRate()));
-                       } else {
-                           currentAction = RateTheMovie1.getInstance(filteredList, currentUser,
-                                   filteredList.get(0).getName(),
-                                   Integer.parseInt(actionInput.getRate()));
-                       }
-
-                       currentAction.executeAction();
-                       currentUser = currentAction.getCurrentUser();
-
-                       previousAction = "rate the movie";
-                   } else {
-                       WriteUtils.generalError();
-
-                   }
+               if (pages.get(currentPage).getNextActions().contains(feature)) {
+                   actions.get(feature).getAction().execute(currentUser, previousAction,
+                           actionInput.getMovie(), inputData.getMovies(),
+                           userList, actionInput.getStartsWith(),
+                           actionInput.getCount(), actionInput.getRate(),
+                           actionInput.getCredentials(), actionInput.getFilters(),
+                           filteredList, notUserBannedMovies,
+                           actionInput.getAddedMovie(), actionInput.getDeletedMovie()
+                           ,currentPage, actions);
+               } else {
+                   WriteUtils.generalError();
                }
+
+               if (actions.get(feature).getAction().getActionParameters() == null) {
+                   continue;
+               }
+
+               if (actions.get(feature).getAction().getActionParameters().getCurrentUser() != null) {
+                   currentUser = actions.get(feature).getAction().getActionParameters().getCurrentUser();
+               }
+
+               if (actions.get(feature).getAction().getActionParameters().getFilteredList() != null) {
+                   filteredList = actions.get(feature).getAction().getActionParameters().getFilteredList();
+               }
+
+               if (actions.get(feature).getAction().getActionParameters().getNotUserBannedMovies() != null) {
+                   notUserBannedMovies = actions.get(feature).getAction().getActionParameters().getNotUserBannedMovies();
+               }
+
+               if (actions.get(feature).getAction().getActionParameters().getCurrentPage() != null) {
+                   currentPage = actions.get(feature).getAction().getActionParameters().getCurrentPage();
+               }
+
+               if (actions.get(feature).getAction().getActionParameters().getPreviousAction() != null) {
+                   previousAction = actions.get(feature).getAction().getActionParameters().getPreviousAction();
+               }
+
+                if (actions.get(feature).getAction().getActionParameters().getUserList() != null) {
+                     userList = actions.get(feature).getAction().getActionParameters().getUserList();
+                }
            }
         }
     }

@@ -9,9 +9,11 @@ import readinput.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Like extends ActionExec {
+public class Rate extends ActionExec {
 
-    public Like() { }
+    private static final int MINIMUM_RATING = 1;
+    private static final int MAXIMUM_RATING = 5;
+    public Rate() { }
 
     @Override
     public void execute(final User currentUser, final String previousAction,
@@ -24,7 +26,7 @@ public class Like extends ActionExec {
                         HashMap<String, ActionInfo> actions) {
 
         if (previousAction == null
-                || actions.get(previousAction).getNextActions().contains("like") == false) {
+                || actions.get(previousAction).getNextActions().contains("rate") == false) {
             WriteUtils.generalError();
             return;
         }
@@ -36,19 +38,26 @@ public class Like extends ActionExec {
             return;
         }
 
-        currentUser.getLikedMovies().add(selectedMovie);
-        selectedMovie.setNumLikes(selectedMovie.getNumLikes() + 1);
+        int intRate = Integer.parseInt(rate);
+
+        if (intRate < MINIMUM_RATING || intRate > MAXIMUM_RATING) {
+            WriteUtils.generalError();
+            return;
+        }
+
+        currentUser.getRatedMovies().add(selectedMovie);
+        selectedMovie.setNumRatings(selectedMovie.getNumRatings() + 1);
+        selectedMovie.setRating(selectedMovie.getRating() + intRate);
 
         WriteUtils.noError(filteredList, currentUser);
 
         if (actionParameters == null) {
-            actionParameters = new ActionBuilder.Builder("like")
-                    .previousAction("like")
-                    .filteredList(filteredList)
+            actionParameters = new ActionBuilder.Builder("rate")
+                    .previousAction("rate")
                     .build();
         } else {
-            actionParameters.setPreviousAction("like");
-            actionParameters.setFilteredList(filteredList);
+            actionParameters.setPreviousAction("rate");
         }
+
     }
 }
