@@ -37,7 +37,7 @@ public class Notifications {
         // Notify all observers
         if (actionType.compareTo("add") == 0) {
             handleAdd(movie);
-        } else if (actionType.compareTo("remove") == 0) {
+        } else if (actionType.compareTo("delete") == 0) {
             handleRemove(deletedMovie);
         }
     }
@@ -65,7 +65,7 @@ public class Notifications {
 
     private void handleRemove(String deletedMovieName) {
 
-        Boolean found = false;
+        Movie deleteMovie = null;
 
         for (Movie movie : movieList) {
             if (movie.getName().compareTo(deletedMovieName) == 0) {
@@ -100,14 +100,15 @@ public class Notifications {
                             }
                         }
                 }
-                // delete the movie from the movie list
-                movieList.remove(movie);
-                found = true;
+                deleteMovie = movie;
+                break;
             }
         }
 
-        if (found == false) {
+        if (deleteMovie == null) {
             WriteUtils.generalError();
+        } else {
+            movieList.remove(deleteMovie);
         }
 
     }

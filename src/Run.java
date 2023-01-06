@@ -44,7 +44,6 @@ public final class Run {
 
         HashMap<String, PageInfo> pages = PageUtils.createPages();
         HashMap<String, ActionInfo> actions = ActionsUtils.createActions(movieList);
-
         // Iterate through te list of actions and execute each action
         for (Action actionInput : actionsList) {
             if (actionInput.getType().compareTo("change page") == 0) {

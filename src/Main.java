@@ -18,7 +18,7 @@ public final class Main {
 
     public static void main(final String[] args) throws IOException {
 
-//        if (args[0].compareTo("/Users/dumib/Dev/ProjectOOP2/checker/resources/in/basic_4.json") == 0) {
+//        if (args[0].compareTo("/Users/dumib/Dev/ProjectOOP2/checker/resources/in/basic_10.json") == 0) {
 
             ObjectMapper mapper = new ObjectMapper();
 
