@@ -2,6 +2,7 @@ package browsingoperations;
 
 import initializations.ObjMapper;
 import readinput.Movie;
+import readinput.Notification;
 import readinput.User;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -90,6 +91,29 @@ public final class WriteUtils {
         return arrayNode;
     }
 
+    public static ArrayNode createNotificationNode(final Notification notification) {
+        ArrayNode arrayNode = objMapper.createArrayNode();
+        arrayNode.add(notification.getMovieName());
+        arrayNode.add(notification.getMessage());
+        return arrayNode;
+    }
+
+    /**
+     * Function to generate a node of notifications
+     * @param notifications
+     * @return
+     */
+    public static ArrayNode createNotificationsList(final ArrayList<Notification> notifications) {
+
+        ArrayNode arrayNode = objMapper.createArrayNode();
+
+        for (Notification notification : notifications) {
+            arrayNode.add(createNotificationNode(notification));
+        }
+
+        return arrayNode;
+    }
+
     /**
      * Function to generate a node of A movie
      * @param movie
@@ -152,6 +176,7 @@ public final class WriteUtils {
         node.put("ratedMovies", createMovieListArray(user.getRatedMovies()));
         node.put("tokensCount", user.getTokensCount());
         node.put("numFreePremiumMovies", user.getNumFreePremiumMovies());
+//        node.put("notifications", createNotificationsList(user.getNotifications()));
 
         return node;
     }

@@ -24,7 +24,7 @@ public class Like extends ActionExec {
                         HashMap<String, ActionInfo> actions) {
 
         if (previousAction == null
-                || actions.get(previousAction).getNextActions().contains("like") == false) {
+                || currentUser.getWatchedMovies().contains(filteredList.get(0)) == false) {
             WriteUtils.generalError();
             return;
         }

@@ -12,8 +12,7 @@ public final class User {
     private ArrayList<Movie> watchedMovies = new ArrayList<Movie>();
     private ArrayList<Movie> likedMovies = new ArrayList<Movie>();
     private ArrayList<Movie> ratedMovies = new ArrayList<Movie>();
-
-    private ArrayList<Notifications> notifications = new ArrayList<Notifications>();
+    private ArrayList<Notification> notifications = new ArrayList<Notification>();
 
     public User() { }
 
@@ -77,11 +76,11 @@ public final class User {
         this.ratedMovies = ratedMovies;
     }
 
-    public ArrayList<Notifications> getNotifications() {
+    public ArrayList<Notification> getNotifications() {
         return notifications;
     }
 
-    public void setNotifications(final ArrayList<Notifications> notifications) {
+    public void setNotifications(final ArrayList<Notification> notifications) {
         this.notifications = notifications;
     }
 }

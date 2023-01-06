@@ -23,13 +23,13 @@ public class Watch extends ActionExec{
                         final String deletedMovie, final String currentPage,
                         HashMap<String, ActionInfo> actions) {
 
+        Movie movie = filteredList.get(0);
+
         if (previousAction == null
-                || actions.get(previousAction).getNextActions().contains("watch") == false) {
+                || currentUser.getPurchasedMovies().contains(movie) == false) {
             WriteUtils.generalError();
             return;
         }
-
-        Movie movie = filteredList.get(0);
 
         if (currentMovie != null && currentMovie.compareTo(movie.getName()) != 0) {
             WriteUtils.generalError();

@@ -26,7 +26,7 @@ public class Rate extends ActionExec {
                         HashMap<String, ActionInfo> actions) {
 
         if (previousAction == null
-                || actions.get(previousAction).getNextActions().contains("rate") == false) {
+                || currentUser.getWatchedMovies().contains(filteredList.get(0)) == false) {
             WriteUtils.generalError();
             return;
         }

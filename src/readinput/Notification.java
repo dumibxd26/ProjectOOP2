@@ -1,11 +1,11 @@
 package readinput;
 
-public final class Notifications {
+public final class Notification {
 
     private String movieName;
     private String message;
 
-    public Notifications(final String movieName, final String message) {
+    public Notification(final String movieName, final String message) {
         this.movieName = movieName;
         this.message = message;
     }
