@@ -27,12 +27,19 @@ public class Like extends ActionExec {
                         final HashMap<User, HashMap<Movie, Integer>> userMovieRatings,
                         final String subscribedGenre, final Notifications notifications) {
 
-        if (currentUser.getWatchedMovies().contains(filteredList.get(0)) == false) {
+        Movie selectedMovie = filteredList.get(0);
+
+        Boolean watched = false;
+        for (Movie movie : currentUser.getWatchedMovies())
+            if (movie.getName().compareTo(selectedMovie.getName()) == 0) {
+                watched = true;
+                break;
+            }
+
+        if (watched == false) {
             WriteUtils.generalError();
             return;
         }
-
-        Movie selectedMovie = filteredList.get(0);
 
         if (currentMovie != null && selectedMovie.getName().compareTo(currentMovie) != 0) {
             WriteUtils.generalError();
@@ -44,12 +51,17 @@ public class Like extends ActionExec {
 
         WriteUtils.noError(filteredList, currentUser);
 
-        if (actionParameters == null) {
-            actionParameters = new ActionBuilder.Builder("like")
-                    .filteredList(filteredList)
-                    .build();
-        } else {
-            actionParameters.setFilteredList(filteredList);
-        }
+        // mai bine nu faci ptc in primu rand e fara sens
+        // in al doilea rand, daca actiunea da fail ptc nu se poate vedea
+        // se opreste inainte sa se modifice asta
+        // si lista filtrata nu apuca sa se modifice si se ia cea de la
+        // like ul dinainte cu useru dinainte
+//        if (actionParameters == null) {
+//            actionParameters = new ActionBuilder.Builder("like")
+//                    .filteredList(filteredList)
+//                    .build();
+//        } else {
+//            actionParameters.setFilteredList(filteredList);
+//        }
     }
 }

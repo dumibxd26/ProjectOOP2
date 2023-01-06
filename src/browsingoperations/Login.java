@@ -42,8 +42,6 @@ public class Login extends ActionExec {
                     .filterCountry(movieList, country);
             WriteUtils.userLogin(user);
 
-//            System.out.println(user.getCredentials().getName());
-
             if (actionParameters == null) {
                 actionParameters = new ActionBuilder.Builder("login")
                         .currentUser(user)

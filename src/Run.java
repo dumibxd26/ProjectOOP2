@@ -47,11 +47,6 @@ public final class Run {
 
         // Iterate through te list of actions and execute each action
         for (Action actionInput : actionsList) {
-
-
-//            if (currentUser != null)
-//                System.out.println(currentUser.getCredentials().getName());
-
             if (actionInput.getType().compareTo("change page") == 0) {
 
                WrapperPageUtils wrapperPageUtils = WrapperPageUtils.getInstance(currentUser,
@@ -75,7 +70,12 @@ public final class Run {
                     Frame frame = pagesHistory.get(pagesHistory.size() - 1);
 
                     currentPage = frame.getPageName();
-                    filteredList = frame.getFilteredList();
+
+                    if (frame.getFilteredList() == null) {
+                        filteredList = notUserBannedMovies;
+                    } else {
+                        filteredList = frame.getFilteredList();
+                    }
 
                     if (currentPage.compareTo("movies") == 0) {
                         WriteUtils.noError(notUserBannedMovies, currentUser);
@@ -89,6 +89,8 @@ public final class Run {
                     notifications.modifyState(actionInput.getFeature(),
                             actionInput.getAddedMovie(),
                             actionInput.getDeletedMovie());
+                    notUserBannedMovies = BrowsingUtils
+                            .filterCountry(movieList, currentUser.getCredentials().getCountry());
             } else {
                 String feature = actionInput.getFeature();
 

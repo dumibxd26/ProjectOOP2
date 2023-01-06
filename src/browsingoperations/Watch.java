@@ -29,7 +29,15 @@ public class Watch extends ActionExec{
 
         Movie movie = filteredList.get(0);
 
-        if (currentUser.getPurchasedMovies().contains(movie) == false) {
+        boolean isPurchased = false;
+        for (Movie purchasedMovie : currentUser.getPurchasedMovies()) {
+            if (purchasedMovie.getName().compareTo(movie.getName()) == 0) {
+                isPurchased = true;
+                break;
+            }
+        }
+
+        if (isPurchased == false) {
             WriteUtils.generalError();
             return;
         }

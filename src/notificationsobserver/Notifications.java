@@ -60,7 +60,6 @@ public class Notifications {
                 }
             }
         }
-
         movieList.add(movie);
     }
 

@@ -31,7 +31,14 @@ public class Rate extends ActionExec {
 
         Movie selectedMovie = filteredList.get(0);
 
-        if (currentUser.getWatchedMovies().contains(selectedMovie) == false) {
+        Boolean watched = false;
+        for (Movie movie : currentUser.getWatchedMovies())
+            if (movie.getName().compareTo(selectedMovie.getName()) == 0) {
+                watched = true;
+                break;
+            }
+
+        if (watched == false) {
             WriteUtils.generalError();
             return;
         }

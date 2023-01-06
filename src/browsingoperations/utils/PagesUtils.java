@@ -31,7 +31,7 @@ public final class PagesUtils {
                 wrapperPageUtils.setCurrentPage(currentPageAux);
 
                 Frame frame = new Frame(wrapperPageUtils.getCurrentPage(),
-                        BrowsingUtils.newArr(notUserBannedMovies),
+                        null,
                         null);
 
                 wrapperPageUtils.getPagesHistory().add(frame);
@@ -69,7 +69,7 @@ public final class PagesUtils {
 
                 if (wrapperPageUtils.getPagesHistory() != null) {
                     Frame frame = new Frame(wrapperPageUtils.getCurrentPage(),
-                            BrowsingUtils.newArr(notUserBannedMovies),
+                            null,
                             null);
 
                     wrapperPageUtils.getPagesHistory().add(frame);
