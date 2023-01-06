@@ -155,6 +155,15 @@ public final class ActionsUtils {
 
         return actionInfo;
     }
+
+    public static ActionInfo createSubscribe() {
+        HashSet<String> subscribeNext = new HashSet<String>();
+
+        ActionExec action = ActionExec.ActionFactory.createAction("subscribe");
+        ActionInfo actionInfo = new ActionInfo(subscribeNext, action);
+
+        return actionInfo;
+    }
     /**
      * Method to create the Hashmap with all the actions
      * a mapper from the action name to the action that can be made
@@ -175,6 +184,7 @@ public final class ActionsUtils {
         actions.put("rate", createRate());
         actions.put("buy premium account", createBuyPremiumAccount());
         actions.put("buy tokens", createBuyTokens());
+        actions.put("subscribe", createSubscribe());
 
         return actions;
     }

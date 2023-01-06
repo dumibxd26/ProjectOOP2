@@ -1,22 +1,22 @@
-import browsingoperations.*;
+import browsingoperations.Frame;
+import browsingoperations.utils.BrowsingUtils;
+import browsingoperations.utils.PagesUtils;
+import browsingoperations.WrapperPageUtils;
+import browsingoperations.utils.WriteUtils;
 import initializations.ActionInfo;
 import initializations.ActionsUtils;
 import initializations.PageInfo;
 import initializations.PageUtils;
-import readinput.User;
-import readinput.Input;
-import readinput.Movie;
-import readinput.Action;
+import readinput.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import notificationsobserver.Notifications;
 
 public final class Run {
 
     private String currentPage;
-    private String previousAction;
     private User currentUser;
-
     public Run() { }
 
     /**
@@ -30,14 +30,17 @@ public final class Run {
         ArrayList<Movie> movieList = inputData.getMovies();
         ArrayList<Movie> notUserBannedMovies = null;
         ArrayList<Movie> filteredList = null;
+        ArrayList<Frame> pagesHistory = null;
+        ArrayList<User> userList = inputData.getUsers();
 
-        previousAction = null;
+        Notifications notifications = new Notifications(movieList, userList);
+
+        HashMap<User, HashMap<Movie, Integer>> userMovieRatings = new HashMap<>();
+
         currentUser = null;
         currentPage = "homepage neautentificat";
         filteredList = null;
         notUserBannedMovies = null;
-
-        ArrayList<User> userList = inputData.getUsers();
 
         HashMap<String, PageInfo> pages = PageUtils.createPages();
         HashMap<String, ActionInfo> actions = ActionsUtils.createActions(movieList);
@@ -45,92 +48,99 @@ public final class Run {
         // Iterate through te list of actions and execute each action
         for (Action actionInput : actionsList) {
 
-           if (actionInput.getType().compareTo("change page") == 0) {
-                if (pages.get(currentPage).getNextPages().contains(actionInput.getPage())) {
-                    String currentPageAux = actionInput.getPage();
-                    if (currentPageAux.compareTo("logout") == 0) {
-                        currentUser = null;
-                        currentPage = "homepage neautentificat";
-                    // Pages which need to write data
-                    } else if (currentPageAux.compareTo("movies") == 0) {
 
-                        WriteUtils.noError(notUserBannedMovies, currentUser);
-                        filteredList = notUserBannedMovies;
-                        currentPage = currentPageAux;
-                    } else if (currentPageAux.compareTo("see details") == 0) {
-                        Movie returnMovie = null;
+//            if (currentUser != null)
+//                System.out.println(currentUser.getCredentials().getName());
 
-                        for (int i = 0; i < filteredList.size(); i++) {
-                            if (filteredList.get(i).getName()
-                                    .compareTo(actionInput.getMovie()) == 0) {
-                                 returnMovie = filteredList.get(i);
-                                 break;
-                            }
-                        }
+            if (actionInput.getType().compareTo("change page") == 0) {
 
-                        if (returnMovie != null) {
-                            filteredList = WriteUtils.pageSeeDetails(returnMovie, currentUser);
-                           currentPage = currentPageAux;
-                        } else {
-                            WriteUtils.generalError();
+               WrapperPageUtils wrapperPageUtils = WrapperPageUtils.getInstance(currentUser,
+                       currentPage, filteredList, pagesHistory);
 
-                            filteredList = notUserBannedMovies;
-                        }
+               PagesUtils.handlePageBrowsing(pages, notUserBannedMovies,
+                       actionInput.getPage(), actionInput.getMovie(),
+                       wrapperPageUtils);
 
-                    } else {
-                        currentPage = currentPageAux;
-                        filteredList = notUserBannedMovies;
-                    }
+               currentUser = wrapperPageUtils.getCurrentUser();
+               currentPage = wrapperPageUtils.getCurrentPage();
+               filteredList = wrapperPageUtils.getFilteredList();
 
-                    previousAction = null;
-                } else {
+            } else if (actionInput.getType().compareTo("back") == 0) {
+
+                if (pagesHistory == null || pagesHistory.size() < 2) {
                     WriteUtils.generalError();
+                    continue;
+                } else {
+                    pagesHistory.remove(pagesHistory.size() - 1);
+                    Frame frame = pagesHistory.get(pagesHistory.size() - 1);
+
+                    currentPage = frame.getPageName();
+                    filteredList = frame.getFilteredList();
+
+                    if (currentPage.compareTo("movies") == 0) {
+                        WriteUtils.noError(notUserBannedMovies, currentUser);
+                    } else if (currentPage.compareTo("see details") == 0) {
+                        Movie returnMovie = frame.getSeeDetailsMovie();
+
+                        WriteUtils.pageSeeDetails(returnMovie, currentUser);
+                    }
                 }
+            } else if(actionInput.getType().compareTo("database") == 0) {
+                    notifications.modifyState(actionInput.getFeature(),
+                            actionInput.getAddedMovie(),
+                            actionInput.getDeletedMovie());
+            } else {
+                String feature = actionInput.getFeature();
 
-           } else {
-               String feature = actionInput.getFeature();
-
-               if (pages.get(currentPage).getNextActions().contains(feature)) {
-                   actions.get(feature).getAction().execute(currentUser, previousAction,
-                           actionInput.getMovie(), inputData.getMovies(),
+                if (pages.get(currentPage).getNextActions().contains(feature)) {
+                   actions.get(feature).getAction().execute(currentUser,
+                           actionInput.getMovie(), movieList,
                            userList, actionInput.getStartsWith(),
                            actionInput.getCount(), actionInput.getRate(),
                            actionInput.getCredentials(), actionInput.getFilters(),
                            filteredList, notUserBannedMovies,
                            actionInput.getAddedMovie(), actionInput.getDeletedMovie()
-                           ,currentPage, actions);
-               } else {
+                           ,currentPage, actions, userMovieRatings,
+                           actionInput.getSubscribedGenre(), notifications);
+                } else {
                    WriteUtils.generalError();
-               }
+                }
 
-               if (actions.get(feature).getAction().getActionParameters() == null) {
+                if (actions.get(feature).getAction().getActionParameters() == null) {
                    continue;
-               }
+                }
 
-               if (actions.get(feature).getAction().getActionParameters().getCurrentUser() != null) {
+                if (actions.get(feature).getAction().getActionParameters().getCurrentUser() != null) {
                    currentUser = actions.get(feature).getAction().getActionParameters().getCurrentUser();
-               }
+                }
 
-               if (actions.get(feature).getAction().getActionParameters().getFilteredList() != null) {
+                if (actions.get(feature).getAction().getActionParameters().getFilteredList() != null) {
                    filteredList = actions.get(feature).getAction().getActionParameters().getFilteredList();
-               }
+                }
 
-               if (actions.get(feature).getAction().getActionParameters().getNotUserBannedMovies() != null) {
+                if (actions.get(feature).getAction().getActionParameters().getNotUserBannedMovies() != null) {
                    notUserBannedMovies = actions.get(feature).getAction().getActionParameters().getNotUserBannedMovies();
-               }
+                }
 
-               if (actions.get(feature).getAction().getActionParameters().getCurrentPage() != null) {
+                if (actions.get(feature).getAction().getActionParameters().getCurrentPage() != null) {
                    currentPage = actions.get(feature).getAction().getActionParameters().getCurrentPage();
-               }
-
-               if (actions.get(feature).getAction().getActionParameters().getPreviousAction() != null) {
-                   previousAction = actions.get(feature).getAction().getActionParameters().getPreviousAction();
-               }
+                }
 
                 if (actions.get(feature).getAction().getActionParameters().getUserList() != null) {
-                     userList = actions.get(feature).getAction().getActionParameters().getUserList();
+                    userList = actions.get(feature).getAction().getActionParameters().getUserList();
+                }
+
+                // The only action that can lead to authenticated homepage
+                // is either login or register
+                if (currentPage.compareTo("homepage autentificat") == 0) {
+                    pagesHistory = new ArrayList<>();
+
+                    Frame frame = new Frame("homepage autentificat", filteredList, null);
+                    pagesHistory.add(frame);
                 }
            }
         }
+
+        BrowsingUtils.handlePremiumEnding(currentUser, notUserBannedMovies);
     }
 }

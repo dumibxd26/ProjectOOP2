@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public final class Movie {
 
     private String name;
-    private int year;
+    private String year;
     private int duration;
     private ArrayList<String> genres;
     private ArrayList<String> actors;
@@ -21,7 +21,7 @@ public final class Movie {
         return name;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 

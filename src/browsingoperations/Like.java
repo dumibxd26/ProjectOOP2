@@ -1,6 +1,8 @@
 package browsingoperations;
 
+import browsingoperations.utils.WriteUtils;
 import initializations.ActionInfo;
+import notificationsobserver.Notifications;
 import readinput.Credentials;
 import readinput.Filters;
 import readinput.Movie;
@@ -14,17 +16,18 @@ public class Like extends ActionExec {
     public Like() { }
 
     @Override
-    public void execute(final User currentUser, final String previousAction,
+    public void execute(final User currentUser,
                         final String currentMovie, final ArrayList<Movie> movieList,
                         final ArrayList<User> userList, final String startsWith,
                         final String count, final String rate, final Credentials credentials,
                         final Filters filters, final ArrayList<Movie> filteredList,
                         final ArrayList<Movie> notUserBannedMovies, final Movie addedMovie,
                         final String deletedMovie, final String currentPage,
-                        HashMap<String, ActionInfo> actions) {
+                        final HashMap<String, ActionInfo> actions,
+                        final HashMap<User, HashMap<Movie, Integer>> userMovieRatings,
+                        final String subscribedGenre, final Notifications notifications) {
 
-        if (previousAction == null
-                || currentUser.getWatchedMovies().contains(filteredList.get(0)) == false) {
+        if (currentUser.getWatchedMovies().contains(filteredList.get(0)) == false) {
             WriteUtils.generalError();
             return;
         }
@@ -43,11 +46,9 @@ public class Like extends ActionExec {
 
         if (actionParameters == null) {
             actionParameters = new ActionBuilder.Builder("like")
-                    .previousAction("like")
                     .filteredList(filteredList)
                     .build();
         } else {
-            actionParameters.setPreviousAction("like");
             actionParameters.setFilteredList(filteredList);
         }
     }

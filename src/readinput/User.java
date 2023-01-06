@@ -1,6 +1,7 @@
 package readinput;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public final class User {
 
@@ -13,6 +14,8 @@ public final class User {
     private ArrayList<Movie> likedMovies = new ArrayList<Movie>();
     private ArrayList<Movie> ratedMovies = new ArrayList<Movie>();
     private ArrayList<Notification> notifications = new ArrayList<Notification>();
+
+    private ArrayList<String> subscribedGenres = new ArrayList<String>();
 
     public User() { }
 
@@ -83,4 +86,9 @@ public final class User {
     public void setNotifications(final ArrayList<Notification> notifications) {
         this.notifications = notifications;
     }
+
+    public ArrayList<String> getSubscribedGenres() {
+        return subscribedGenres;
+    }
+
 }

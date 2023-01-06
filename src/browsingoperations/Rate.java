@@ -1,6 +1,8 @@
 package browsingoperations;
 
+import browsingoperations.utils.WriteUtils;
 import initializations.ActionInfo;
+import notificationsobserver.Notifications;
 import readinput.Credentials;
 import readinput.Filters;
 import readinput.Movie;
@@ -16,22 +18,23 @@ public class Rate extends ActionExec {
     public Rate() { }
 
     @Override
-    public void execute(final User currentUser, final String previousAction,
+    public void execute(final User currentUser,
                         final String currentMovie, final ArrayList<Movie> movieList,
                         final ArrayList<User> userList, final String startsWith,
                         final String count, final String rate, final Credentials credentials,
                         final Filters filters, final ArrayList<Movie> filteredList,
                         final ArrayList<Movie> notUserBannedMovies, final Movie addedMovie,
                         final String deletedMovie, final String currentPage,
-                        HashMap<String, ActionInfo> actions) {
+                        final HashMap<String, ActionInfo> actions,
+                        final HashMap<User, HashMap<Movie, Integer>> userMovieRatings,
+                        final String subscribedGenre, final Notifications notifications) {
 
-        if (previousAction == null
-                || currentUser.getWatchedMovies().contains(filteredList.get(0)) == false) {
+        Movie selectedMovie = filteredList.get(0);
+
+        if (currentUser.getWatchedMovies().contains(selectedMovie) == false) {
             WriteUtils.generalError();
             return;
         }
-
-        Movie selectedMovie = filteredList.get(0);
 
         if (currentMovie != null && selectedMovie.getName().compareTo(currentMovie) != 0) {
             WriteUtils.generalError();
@@ -45,19 +48,21 @@ public class Rate extends ActionExec {
             return;
         }
 
-        currentUser.getRatedMovies().add(selectedMovie);
-        selectedMovie.setNumRatings(selectedMovie.getNumRatings() + 1);
+        if (userMovieRatings.get(currentUser) == null) {
+            userMovieRatings.put(currentUser, new HashMap<>());
+        }
+
+        if (currentUser.getRatedMovies().contains(selectedMovie) == false) {
+            currentUser.getRatedMovies().add(selectedMovie);
+            selectedMovie.setNumRatings(selectedMovie.getNumRatings() + 1);
+        } else {
+            selectedMovie.setRating(selectedMovie.getRating() - userMovieRatings.get(currentUser).get(selectedMovie));
+        }
+
         selectedMovie.setRating(selectedMovie.getRating() + intRate);
+        userMovieRatings.get(currentUser).put(selectedMovie, intRate);
 
         WriteUtils.noError(filteredList, currentUser);
-
-        if (actionParameters == null) {
-            actionParameters = new ActionBuilder.Builder("rate")
-                    .previousAction("rate")
-                    .build();
-        } else {
-            actionParameters.setPreviousAction("rate");
-        }
 
     }
 }

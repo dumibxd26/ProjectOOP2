@@ -1,6 +1,8 @@
 package browsingoperations;
 
+import browsingoperations.utils.WriteUtils;
 import initializations.ActionInfo;
+import notificationsobserver.Notifications;
 import readinput.Credentials;
 import readinput.Filters;
 import readinput.Movie;
@@ -14,19 +16,20 @@ public class Watch extends ActionExec{
     public Watch() { }
 
     @Override
-    public void execute(final User currentUser, final String previousAction,
+    public void execute(final User currentUser,
                         final String currentMovie, final ArrayList<Movie> movieList,
                         final ArrayList<User> userList, final String startsWith,
                         final String count, final String rate, final Credentials credentials,
                         final Filters filters, final ArrayList<Movie> filteredList,
                         final ArrayList<Movie> notUserBannedMovies, final Movie addedMovie,
                         final String deletedMovie, final String currentPage,
-                        HashMap<String, ActionInfo> actions) {
+                        final HashMap<String, ActionInfo> actions,
+                        final HashMap<User, HashMap<Movie, Integer>> userMovieRatings,
+                        final String subscribedGenre, final Notifications notifications) {
 
         Movie movie = filteredList.get(0);
 
-        if (previousAction == null
-                || currentUser.getPurchasedMovies().contains(movie) == false) {
+        if (currentUser.getPurchasedMovies().contains(movie) == false) {
             WriteUtils.generalError();
             return;
         }
@@ -36,16 +39,13 @@ public class Watch extends ActionExec{
             return;
         }
 
-        currentUser.getWatchedMovies().add(movie);
+        // Check if the movie was already watched
+        // not to add it again in the list of watched movies
+        if (currentUser.getWatchedMovies().contains(movie) == false) {
+            currentUser.getWatchedMovies().add(movie);
+        }
+
         WriteUtils.noError(filteredList, currentUser);
 
-        if (actionParameters == null) {
-            actionParameters = new ActionBuilder.Builder("watch")
-                    .previousAction("watch")
-                    .build();
-
-        } else {
-            actionParameters.setPreviousAction("watch");
-        }
     }
 }

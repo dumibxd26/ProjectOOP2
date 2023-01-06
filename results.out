@@ -14,7 +14,8 @@
     "likedMovies" : [ ],
     "ratedMovies" : [ ],
     "tokensCount" : 0,
-    "numFreePremiumMovies" : 15
+    "numFreePremiumMovies" : 15,
+    "notifications" : [ ]
   }
 }, {
   "error" : null,
@@ -32,7 +33,8 @@
     "likedMovies" : [ ],
     "ratedMovies" : [ ],
     "tokensCount" : 0,
-    "numFreePremiumMovies" : 15
+    "numFreePremiumMovies" : 15,
+    "notifications" : [ ]
   }
 }, {
   "error" : null,
@@ -50,6 +52,23 @@
     "likedMovies" : [ ],
     "ratedMovies" : [ ],
     "tokensCount" : 0,
-    "numFreePremiumMovies" : 15
+    "numFreePremiumMovies" : 15,
+    "notifications" : [ ]
   }
+}, {
+  "error" : "Error",
+  "currentMoviesList" : [ ],
+  "currentUser" : null
+}, {
+  "error" : "Error",
+  "currentMoviesList" : [ ],
+  "currentUser" : null
+}, {
+  "error" : "Error",
+  "currentMoviesList" : [ ],
+  "currentUser" : null
+}, {
+  "error" : "Error",
+  "currentMoviesList" : [ ],
+  "currentUser" : null
 } ]

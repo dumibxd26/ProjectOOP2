@@ -1,4 +1,4 @@
-package browsingoperations;
+package browsingoperations.utils;
 
 import initializations.ObjMapper;
 import readinput.Movie;
@@ -91,11 +91,13 @@ public final class WriteUtils {
         return arrayNode;
     }
 
-    public static ArrayNode createNotificationNode(final Notification notification) {
-        ArrayNode arrayNode = objMapper.createArrayNode();
-        arrayNode.add(notification.getMovieName());
-        arrayNode.add(notification.getMessage());
-        return arrayNode;
+    public static ObjectNode createNotificationNode(final Notification notification) {
+        ObjectNode node = objMapper.createNode();
+
+        node.put("movieName", notification.getMovieName());
+        node.put("message", notification.getMessage());
+
+        return node;
     }
 
     /**
@@ -176,7 +178,7 @@ public final class WriteUtils {
         node.put("ratedMovies", createMovieListArray(user.getRatedMovies()));
         node.put("tokensCount", user.getTokensCount());
         node.put("numFreePremiumMovies", user.getNumFreePremiumMovies());
-//        node.put("notifications", createNotificationsList(user.getNotifications()));
+        node.put("notifications", createNotificationsList(user.getNotifications()));
 
         return node;
     }
@@ -195,6 +197,22 @@ public final class WriteUtils {
 
         node.put("error", (String) null);
         node.put("currentMoviesList", createMovieListArray(currentMoviesList));
+        node.put("currentUser", createUserOutput(user));
+
+        objMapper.getOutput().add(node);
+    }
+
+    /**
+     * Function to create the output if the final user
+     * is a premium one
+     * @param user
+     */
+    public static void finalPremium(final User user) {
+
+        ObjectNode node = objMapper.createNode();
+
+        node.put("error", (String) null);
+        node.put("currentMoviesList", (String) null);
         node.put("currentUser", createUserOutput(user));
 
         objMapper.getOutput().add(node);

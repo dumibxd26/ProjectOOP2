@@ -1,10 +1,13 @@
-package browsingoperations;
+package browsingoperations.utils;
 
 import readinput.Movie;
+import readinput.Notification;
 import readinput.User;
 import readinput.Credentials;
 
-import java.util.ArrayList;
+import javax.xml.crypto.dsig.keyinfo.KeyValue;
+import java.security.KeyPair;
+import java.util.*;
 
 public final class BrowsingUtils {
 
@@ -250,5 +253,77 @@ public final class BrowsingUtils {
                 .forEach(m -> newArr.add(m));
 
         return newArr;
+    }
+
+    public static void handlePremiumEnding(final User user, final ArrayList<Movie> movieList) {
+
+        if (user == null || user.getCredentials().getAccountType().compareTo("standard") == 0) {
+            return;
+        }
+
+        ArrayList<Movie> likedMovies = user.getLikedMovies();
+
+        HashMap<String, Integer> mapGenres = new HashMap<String, Integer>();
+
+        for (Movie movie : likedMovies) {
+            for (String genre : movie.getGenres()) {
+                if (mapGenres.containsKey(genre)) {
+                    mapGenres.put(genre, mapGenres.get(genre) + 1);
+                } else {
+                    mapGenres.put(genre, 1);
+                }
+            }
+        }
+       class Pair {
+            String genre;
+            int likes;
+
+            public Pair(String genre, int likes) {
+                this.genre = genre;
+                this.likes = likes;
+            }
+
+           public String getGenre() {
+               return genre;
+           }
+           public int getLikes() {
+               return likes;
+           }
+       }
+
+        ArrayList<Pair> genresArray = new ArrayList<Pair>();
+
+        for (Map.Entry<String, Integer> entry : mapGenres.entrySet()) {
+            genresArray.add(new Pair(entry.getKey(), entry.getValue()));
+        }
+
+        // sorting by likes in decreasing order, and if the likes are equal
+        // sort by genre in increasing order
+        // using comparator.comparing!!
+
+        genresArray.sort(Comparator.comparing(Pair::getLikes).reversed()
+                .thenComparing(Pair::getGenre));
+
+        // sort the movies in decreasing order by the number of likes using comparator.comparing!!
+
+        movieList.sort(Comparator.comparing(Movie::getNumRatings).reversed());
+
+        String movieName = "No recommendation";
+
+        for (Pair movieParams : genresArray) {
+            for (Movie movie : movieList) {
+                if (movie.getGenres().contains(movieParams.getGenre())
+                    && user.getWatchedMovies().contains(movie) == false) {
+                    movieName = movie.getName();
+                    break;
+                }
+            }
+        }
+
+        Notification notification = new Notification(movieName, "Recommendation");
+
+        user.getNotifications().add(notification);
+        WriteUtils.finalPremium(user);
+
     }
 }

@@ -1,6 +1,9 @@
 package browsingoperations;
 
+import browsingoperations.utils.BrowsingUtils;
+import browsingoperations.utils.WriteUtils;
 import initializations.ActionInfo;
+import notificationsobserver.Notifications;
 import readinput.Credentials;
 import readinput.Filters;
 import readinput.Movie;
@@ -14,14 +17,16 @@ public class Login extends ActionExec {
         public Login() { }
 
         @Override
-        public void execute(final User currentUser, final String previousAction,
+        public void execute(final User currentUser,
                             final String currentMovie, final ArrayList<Movie> movieList,
                             final ArrayList<User> userList, final String startsWith,
                             final String count, final String rate, final Credentials credentials,
                             final Filters filters, final ArrayList<Movie> filteredList,
                             final ArrayList<Movie> notUserBannedMovies, final Movie addedMovie,
                             final String deletedMovie, final String currentPage,
-                            HashMap<String, ActionInfo> actions) {
+                            final HashMap<String, ActionInfo> actions,
+                            final HashMap<User, HashMap<Movie, Integer>> userMovieRatings,
+                            final String subscribedGenre, final Notifications notifications) {
 
             User user = BrowsingUtils.checkUserExistence(userList,
                         credentials);
@@ -37,22 +42,21 @@ public class Login extends ActionExec {
                     .filterCountry(movieList, country);
             WriteUtils.userLogin(user);
 
+//            System.out.println(user.getCredentials().getName());
+
             if (actionParameters == null) {
                 actionParameters = new ActionBuilder.Builder("login")
                         .currentUser(user)
                         .notUserBannedMovies(notBanned)
                         .filteredList(notBanned)
                         .currentPage("homepage autentificat")
-                        .previousAction("login")
                         .build();
-
 
             } else {
                 actionParameters.setCurrentUser(user);
                 actionParameters.setNotUserBannedMovies(notBanned);
                 actionParameters.setFilteredList(notBanned);
                 actionParameters.setCurrentPage("homepage autentificat");
-                actionParameters.setPreviousAction("login");
             }
 
         }

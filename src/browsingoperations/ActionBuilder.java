@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class ActionBuilder {
     private String name;
     private User currentUser;
-    private String previousAction;
     private String currentPage;
     private ArrayList<Movie> movieList;
     private ArrayList<Movie> filteredList;
@@ -26,7 +25,6 @@ public class ActionBuilder {
         private ArrayList<Movie> filteredList = null;
         private ArrayList<Movie> notUserBannedMovies = null;
         private ArrayList<User> userList = null;
-        private String previousAction = null;
         private String currentPage = null;
         public Builder(final String name) {
             this.name = name;
@@ -49,15 +47,6 @@ public class ActionBuilder {
          */
         public Builder userList(final ArrayList<User> userListParam) {
             this.userList = userListParam;
-            return this;
-        }
-        /**
-         * Builder function for previousAction
-         * @param previousActionParam
-         * @return
-         */
-        public Builder previousAction(final String previousActionParam) {
-            this.previousAction = previousActionParam;
             return this;
         }
         /**
@@ -107,7 +96,6 @@ public class ActionBuilder {
 
     private ActionBuilder(Builder builder) {
         this.name = builder.name;
-        this.previousAction = builder.previousAction;
         this.movieList = builder.movieList;
         this.userList = builder.userList;
         this.filteredList = builder.filteredList;
@@ -146,20 +134,6 @@ public class ActionBuilder {
     }
     /**
      * Getter for previousAction
-     * @return
-     */
-    public String getPreviousAction() {
-        return previousAction;
-    }
-    /**
-     * Setter for currentMovie
-     * @return
-     */
-    public void setPreviousAction(String previousAction) {
-        this.previousAction = previousAction;
-    }
-    /**
-     * Getter for movieList
      * @return
      */
     public ArrayList<Movie> getMovieList() {

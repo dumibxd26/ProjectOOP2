@@ -56,12 +56,12 @@ public final class PageUtils {
 
         moviesPageSetNext.add("movies");
 
-        HashSet<String> moviesPageActionstNext = new HashSet<String>();
+        HashSet<String> moviesPageActionsNext = new HashSet<String>();
 
-        moviesPageActionstNext.add("search");
-        moviesPageActionstNext.add("filter");
+        moviesPageActionsNext.add("search");
+        moviesPageActionsNext.add("filter");
 
-        PageInfo loginPageInfo = new PageInfo(moviesPageSetNext, moviesPageActionstNext);
+        PageInfo loginPageInfo = new PageInfo(moviesPageSetNext, moviesPageActionsNext);
 
         return loginPageInfo;
     }
@@ -79,12 +79,12 @@ public final class PageUtils {
 
         upgradesPageSetNext.add("upgrades");
 
-        HashSet<String> upgradesPageActionstNext = new HashSet<String>();
+        HashSet<String> upgradesPageActionsNext = new HashSet<String>();
 
-        upgradesPageActionstNext.add("buy premium account");
-        upgradesPageActionstNext.add("buy tokens");
+        upgradesPageActionsNext.add("buy premium account");
+        upgradesPageActionsNext.add("buy tokens");
 
-        PageInfo loginPageInfo = new PageInfo(upgradesPageSetNext, upgradesPageActionstNext);
+        PageInfo loginPageInfo = new PageInfo(upgradesPageSetNext, upgradesPageActionsNext);
 
         return loginPageInfo;
     }
@@ -103,14 +103,15 @@ public final class PageUtils {
 
         seeDetailsSetNext.add("see details");
 
-        HashSet<String> upgradesPageSetNext = new HashSet<String>();
+        HashSet<String> seeDetailsActionsNext = new HashSet<String>();
 
-        upgradesPageSetNext.add("purchase");
-        upgradesPageSetNext.add("watch");
-        upgradesPageSetNext.add("like");
-        upgradesPageSetNext.add("rate");
+        seeDetailsActionsNext.add("purchase");
+        seeDetailsActionsNext.add("watch");
+        seeDetailsActionsNext.add("like");
+        seeDetailsActionsNext.add("rate");
+        seeDetailsActionsNext.add("subscribe");
 
-        PageInfo seeDetailsInfo = new PageInfo(seeDetailsSetNext, upgradesPageSetNext);
+        PageInfo seeDetailsInfo = new PageInfo(seeDetailsSetNext, seeDetailsActionsNext);
 
         return seeDetailsInfo;
     }

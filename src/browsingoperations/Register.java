@@ -1,6 +1,9 @@
 package browsingoperations;
 
+import browsingoperations.utils.BrowsingUtils;
+import browsingoperations.utils.WriteUtils;
 import initializations.ActionInfo;
+import notificationsobserver.Notifications;
 import readinput.Credentials;
 import readinput.Filters;
 import readinput.Movie;
@@ -14,14 +17,16 @@ public class Register extends ActionExec {
     public Register() { }
 
     @Override
-    public void execute(final User currentUser, final String previousAction,
+    public void execute(final User currentUser,
                         final String currentMovie, final ArrayList<Movie> movieList,
                         final ArrayList<User> userList, final String startsWith,
                         final String count, final String rate, final Credentials credentials,
                         final Filters filters, final ArrayList<Movie> filteredList,
                         final ArrayList<Movie> notUserBannedMovies, final Movie addedMovie,
                         final String deletedMovie, final String currentPage,
-                        HashMap<String, ActionInfo> actions) {
+                        final HashMap<String, ActionInfo> actions,
+                        final HashMap<User, HashMap<Movie, Integer>> userMovieRatings,
+                        final String subscribedGenre, final Notifications notifications) {
 
         User user = BrowsingUtils.checkUserExistence(userList, credentials);
 
@@ -37,12 +42,13 @@ public class Register extends ActionExec {
         ArrayList<Movie> notBanned = BrowsingUtils
                 .filterCountry(movieList, newUser.getCredentials().getCountry());
 
+        notifications.registerObserver(newUser);
+
         if (actionParameters == null) {
             actionParameters = new ActionBuilder.Builder("register")
                     .currentUser(newUser)
                     .userList(userList)
                     .currentPage("homepage autentificat")
-                    .previousAction("register")
                     .notUserBannedMovies(notBanned)
                     .filteredList(notBanned)
                     .build();
@@ -50,10 +56,8 @@ public class Register extends ActionExec {
             actionParameters.setCurrentUser(newUser);
             actionParameters.setUserList(userList);
             actionParameters.setCurrentPage("homepage autentificat");
-            actionParameters.setPreviousAction("register");
             actionParameters.setNotUserBannedMovies(notBanned);
             actionParameters.setFilteredList(notBanned);
         }
-
     }
 }
