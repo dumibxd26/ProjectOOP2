@@ -12,10 +12,15 @@ import readinput.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Search extends ActionExec{
+public class Search extends ActionExec {
 
     public Search() { }
 
+    /**
+     * inherited method to execute the action
+     * find the movies that start with the given string
+     * add them to the filtered list
+     */
     @Override
     public void execute(final User currentUser,
                         final String currentMovie, final ArrayList<Movie> movieList,
@@ -28,17 +33,16 @@ public class Search extends ActionExec{
                         final HashMap<User, HashMap<Movie, Integer>> userMovieRatings,
                         final String subscribedGenre, final Notifications notifications) {
 
-        ArrayList<Movie> filteredListFunc = BrowsingUtils.filterStartsWith(filteredList, startsWith);
+        ArrayList<Movie> filteredListFunc = BrowsingUtils
+                .filterStartsWith(filteredList, startsWith);
 
         WriteUtils.noError(filteredListFunc, currentUser);
 
         if (actionParameters == null) {
             actionParameters = new ActionBuilder.Builder("search")
-                    .currentUser(currentUser)
                     .filteredList(filteredListFunc)
                     .build();
         } else {
-            actionParameters.setCurrentUser(currentUser);
             actionParameters.setFilteredList(filteredListFunc);
         }
     }

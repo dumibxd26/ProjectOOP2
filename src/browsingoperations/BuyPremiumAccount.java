@@ -11,12 +11,18 @@ import readinput.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class BuyPremiumAccount extends ActionExec{
+public class BuyPremiumAccount extends ActionExec {
 
     private static final int PREMIUMACCOUNTPRICE = 10;
 
     public BuyPremiumAccount() { }
 
+    /**
+     * inherited method to buy premium account
+     * if the user has enough tokens(10)
+     * the user will be upgraded to premium account
+     * otherwise write error
+     */
     @Override
     public void execute(final User currentUser,
                         final String currentMovie, final ArrayList<Movie> movieList,

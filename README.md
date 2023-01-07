@@ -1,75 +1,81 @@
      ___________________________________
     |                                   |
     |     Bogdan Dumitrescu 322CAa      |
-    |        Project Part 1             |
+    |        Project Part 2             |
     |          POO(2022)                |
     |                                   |
     |___________________________________|
 
+    I left the readme for the first part of the project
+    so you can see the progress.
 
-Probably you after seeing my code:
+    The design patterns I used:
+    - Factory
+    - Builder
+    - Singleton
+    - Observer
 
-![alt text](https://img.bleacherreport.net/cms/media/image/83/55/60/8e/e4a3/4512/ae7f/5b5796a78bce/crop_exact_fc9nl1oacaakvkm.jpeg?h=378&q=90&w=567)
-
-    The first part of the project aims to implement the backend of a Netflix like website. The user has access to multiple pages with different possible actions available. 
-
-    The design patterns I used are: Builder(for Actions classes builder) and Singleton for each action and for the database(which saves a lot of memory and function parametres size).
-
-    For the next project, I am planning to improve the mess I wrote here(because, apparently, I didn't do enough research and planning for this project and things didn't work the way I wanted mid project). I will use 
-    a factory with the Builder pattern and probably strategy or observer.
-
-    I didn't implement a special factory class in advance for the users, since it was not that useful for this project. But, if needed, I will implement it in the next project. 
-
-    I will not go through each function, because most of them are self explanatory, but I will explain the most important actions.
-
-
-    The main class only initialises intput and output, sends them to the Run utility class and then it writes the output to a file.
-
-    The Run function is the brain of the project, it iterates through the actions and calls the corresponding methods. It also writes output for the see details and movies pages.
-
-    Must note that I always keep track of two Movie lists, notUserBannedMovies(depending on the country) and filteredList(depending on the previous filters), because some commands
-    require the filteredList(Search, Rate, Like, Watch, purchase etc) and some require the notUserBannedMovies(movies etc).
-
-    When the user logs in / register, after checking if its credentials are valid, the notUserBanned list is initialised and the action is printed.
-
-    Then, the current page becomes homepage authenticated and the user can acces the movies(which prints the notUserBannedMovies list), Upgrades and logout.
-
-    Changing the page to a not valid next one, results in printing "the general error".
-
-    If the user decides to search for a movie / filter the movies, the filteredList is updated for the next commands, or restored to notUserBanned if it goes back to movies page.
-
-    If the user wants to see the details for a specific movie, the filtered list becomes that specific movie. It is restored to notUserBannedMovies if the user goes back to movies page.
-
-    For executing the watch, rate, like actions, previous actions have to be executed first, otherwise it is not possible and the general error is printed.
-
-
-    Problems I encountered:
-
-    At first, I thought that my idea was amazing, then I realised that Singletons had to be reinitialised for each tests, which kinda ruined my idea and defeats(a little) the purpose of them. That's because I didn't know how tests were run before test 6..
-
-    The Singleton for the database is very useful tho.
-
-    The builder is not THAT useful in my case, because I didn't know that I could use a factory builder pattern which will be an amazing idea for the next project(and I will explain why in a second). My Action classes extend the Builder class which does not make that much sense, and more non sense operations are made there to keep track of the instances of the singletons and the builder's.
-
-    I also use two data structures written in ActionUtils and PageUtils. One to store the next actions that can be executed at some point and one that stores the next pages that can be accessed and actions for that specific page.
-
-    Note: Pages are only strings, and actions are classes!
-
-    What will be solved by the Factory Builder in the next project:
-
-    The main function will not have cases, it will only execute a specific action based on the name of the currentaAction variable.
-
-    Code will make more sense, probably I will remove the singletons from the Actions classes and the ActionUtils data structure will efectively hold the actionClass in it(Not null as it does now).
-
-
-    What I learned:
+   As promised, I implemented the factory design pattern to help the builder
+   create the actions and adding them in a hashmap, so they can easily be accessed.
+   
+   Basically what I did, is that in the main function, when you try to execute an action,
+   you simply call it's execute function(which defines its behavior) from the hashmap.
+   It is something like: actionMap.get(feature).execute();
+   
+    The FACTORY importance is given by eliminating boilerplate code,treating cases and
+    not showing the client the execution logic. Also, it creates a more generic code.
     
-    That I should do more planning before writing code.
-    That I should do more research on design patterns.
-    That I should not have skipped the courses.
+    The BUILDER is used because some actions need some parametres and others don't.
+    For example, Login/Register change the currentUser, notUserBannedList, filteredList, etc.
+    But Search only affect one list, the filtered list. Other actions don't affect anything.
 
-    What I wish you would do / have done:
+    Those variables are changed after every action, if they are used by specific that specific action.
+    
+    The SINGLETON is used for the output database, and for a wrapper class(global variable).
+    The wrapper is for PageUtils, since another builder would have been an overkill there,
+        I created a wrapper for the variables that can be change by the action of changing pages
+    (for logout the currentPage changes, current user becomes null, history page becomes null, etc,
+    (see details changes the currentPage, and filtered list). And all of those page changes 
+    change the current page.
+        Those changed variables are then retreived in the Run function from the wrapper.
+    
+    The OBSERVER is used for the notification system and it works like this:
+    The subject is the movie list and the observers are the users.
+    I know, there could be an implementation where the observer is each genre,
+    and the observers are the user, it would probably make more sense and it would
+    have been a more natural observer... But imagine how many classes should have been
+    created, how many genres I should have looked for in the tests and the overhead...
+    So I thought that this implementation is better:
+    When a user is added(it registers), the registerObserver method is called, and the
+    list of observers(user) is updated. When a movie is added/deleted, the modifyState
+    method is called, and it does its job notifying the observers about the changes
+    if needed.
 
-    Teach design patterns at least before the deadline(all design pattenrs besides singleton were thought the day before the deadline).
+    I also used Comparator.compare(I've noticed you gave extra points for that :P)
+    
+    I didn't use more than 4 design patterns since I thought that even 4 was too much.
+    I could have added a Filter pattern but the context was not good enough for it.
 
-    Recommend a good book for design patterns(I also asked for this in the previous project and I got no answer).
+    
+ Most of the implementation is already explained in the JavaDocs, but I will briefly explain 
+ the most important parts:
+
+     The main function only initialises the output database and ObjectMapper functionality.
+    The Run class is the core of the program, this is where de data is initialised and 
+    distributed to the other classes. 
+        If the action type is "change page", we handle the page changing
+    and we modify the lists, current user, history of pages and the current page if needed.
+        If the action type is "back", and the action can be done, we obtain the last frame(last page's lists, etc)
+    and we execute actions from there. If we get to "see details" or "movies" after backing, we print the
+    desired message.
+        If the action type is "on page", we execute the actions from the hashmap as explained.
+        If the action type is "database", we execute the adding/removing movies as explained.
+
+    Honestly, the rest of the code is either self explanatory or already explained in the javadocs.
+
+I hope this design is good enough, I struggled a lot to come out with this solution.
+I think it's too much to ask for a better idea, or the best that you found yet, so I would love to hear
+what could have been done better in my homework. Thank you!
+
+        
+   

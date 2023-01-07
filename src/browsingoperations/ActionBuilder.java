@@ -1,19 +1,15 @@
 package browsingoperations;
 
-import readinput.Credentials;
 import readinput.Movie;
 import readinput.User;
-import readinput.Filters;
 import java.util.ArrayList;
 
 public class ActionBuilder {
     private String name;
     private User currentUser;
     private String currentPage;
-    private ArrayList<Movie> movieList;
     private ArrayList<Movie> filteredList;
     private ArrayList<Movie> notUserBannedMovies;
-    private ArrayList<User> userList;
 
     public ActionBuilder() { }
 
@@ -21,34 +17,13 @@ public class ActionBuilder {
 
         private final String name;
         private User currentUser = null;
-        private ArrayList<Movie> movieList;
         private ArrayList<Movie> filteredList = null;
         private ArrayList<Movie> notUserBannedMovies = null;
-        private ArrayList<User> userList = null;
         private String currentPage = null;
         public Builder(final String name) {
             this.name = name;
         }
 
-        /**
-         * Builder function for movieList
-         * @param movieListParam
-         * @return
-         */
-        public Builder movieList(final ArrayList<Movie> movieListParam) {
-            this.movieList = movieListParam;
-            return this;
-        }
-
-        /**
-         * Builder function for userList
-         * @param userListParam
-         * @return
-         */
-        public Builder userList(final ArrayList<User> userListParam) {
-            this.userList = userListParam;
-            return this;
-        }
         /**
          * Builder function for filteredList
          * @param filteredListParam
@@ -94,10 +69,8 @@ public class ActionBuilder {
         }
     }
 
-    private ActionBuilder(Builder builder) {
+    private ActionBuilder(final Builder builder) {
         this.name = builder.name;
-        this.movieList = builder.movieList;
-        this.userList = builder.userList;
         this.filteredList = builder.filteredList;
         this.notUserBannedMovies = builder.notUserBannedMovies;
         this.currentPage = builder.currentPage;
@@ -115,7 +88,7 @@ public class ActionBuilder {
      * Setter for currentUser
      * @return
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
     /**
@@ -125,63 +98,54 @@ public class ActionBuilder {
     public User getCurrentUser() {
         return currentUser;
     }
+
     /**
-     * Getter for previousAction
-     * @return
+     * setter for currentUser
+     * @param currentUser
      */
-    public void setCurrentUser(User currentUser) {
+    public void setCurrentUser(final User currentUser) {
         this.currentUser = currentUser;
     }
     /**
-     * Getter for previousAction
-     * @return
+     * Getter for filteredList
+     * @return filteredList
      */
-    public ArrayList<Movie> getMovieList() {
-        return movieList;
-    }
-    /**
-     * Setter for userList
-     * @return
-     */
-    public void setMovieList(ArrayList<Movie> movieList) {
-        this.movieList = movieList;
-    }
-    /**
-     * Getter for userList
-     * @return
-     */
-    public ArrayList<User> getUserList() {
-        return userList;
-    }
-    /**
-     * Setter for startsWith
-     * @return
-     */
-    public void setUserList(ArrayList<User> userList) {
-        this.userList = userList;
-    }
-
     public ArrayList<Movie> getFilteredList() {
         return filteredList;
     }
-
-    public void setFilteredList(ArrayList<Movie> filteredList) {
+    /**
+     * Setter for filteredList
+     * @param filteredList
+     */
+    public void setFilteredList(final ArrayList<Movie> filteredList) {
         this.filteredList = filteredList;
     }
-
+    /**
+     * Getter for notUserBannedMovies
+     * @return notUserBannedMovies
+     */
     public ArrayList<Movie> getNotUserBannedMovies() {
         return notUserBannedMovies;
     }
-
-    public void setNotUserBannedMovies(ArrayList<Movie> notUserBannedMovies) {
+    /**
+     * Setter for notUserBannedMovies
+     * @param notUserBannedMovies
+     */
+    public void setNotUserBannedMovies(final ArrayList<Movie> notUserBannedMovies) {
         this.notUserBannedMovies = notUserBannedMovies;
     }
-
+    /**
+     * Getter for currentPage
+     * @return currentPage
+     */
     public String getCurrentPage() {
         return currentPage;
     }
-
-    public void setCurrentPage(String currentPage) {
+    /**
+     * Setter for currentPage
+     * @param currentPage
+     */
+    public void setCurrentPage(final String currentPage) {
         this.currentPage = currentPage;
     }
 

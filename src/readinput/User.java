@@ -1,7 +1,6 @@
 package readinput;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public final class User {
 
@@ -35,7 +34,7 @@ public final class User {
         return tokensCount;
     }
 
-    public void setTokensCount(int tokensCount) {
+    public void setTokensCount(final int tokensCount) {
         this.tokensCount = tokensCount;
     }
 

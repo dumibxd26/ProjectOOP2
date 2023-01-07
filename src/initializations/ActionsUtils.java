@@ -1,32 +1,21 @@
 package initializations;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-
-import readinput.Movie;
-import browsingoperations.ActionBuilder;
 import browsingoperations.ActionExec;
 
-
-// Maybe, in the future, actions can be implemented with
-// other previous actions before, and this makes the job easier.
 public final class ActionsUtils {
 
     private ActionsUtils() { }
-
-    public static ArrayList<Movie> movieList;
 
     /**
      * Method to initialise the Login Action
      * @return
      */
     public static ActionInfo createLogin() {
-        HashSet<String> loginSetNext = new HashSet<String>();
 
         ActionExec action = ActionExec.ActionFactory.createAction("login");
 
-        ActionInfo actionInfo = new ActionInfo(loginSetNext, action);
+        ActionInfo actionInfo = new ActionInfo(action);
 
         return actionInfo;
     }
@@ -36,11 +25,10 @@ public final class ActionsUtils {
      * @return
      */
     public static ActionInfo createRegister() {
-        HashSet<String> registerSetNext = new HashSet<String>();
 
         ActionExec action = ActionExec.ActionFactory.createAction("register");
 
-        ActionInfo actionInfo = new ActionInfo(registerSetNext, action);
+        ActionInfo actionInfo = new ActionInfo(action);
 
         return actionInfo;
     }
@@ -50,11 +38,10 @@ public final class ActionsUtils {
      * @return
      */
     public static ActionInfo createSearch() {
-        HashSet<String> searchSetNext = new HashSet<String>();
 
         ActionExec action = ActionExec.ActionFactory.createAction("search");
 
-        ActionInfo actionInfo = new ActionInfo(searchSetNext, action);
+        ActionInfo actionInfo = new ActionInfo(action);
 
         return actionInfo;
     }
@@ -63,10 +50,9 @@ public final class ActionsUtils {
      * @return
      */
     public static ActionInfo createFilter() {
-        HashSet<String> filterSetNext = new HashSet<String>();
 
         ActionExec action = ActionExec.ActionFactory.createAction("filter");
-        ActionInfo actionInfo = new ActionInfo(filterSetNext, action);
+        ActionInfo actionInfo = new ActionInfo(action);
 
         return actionInfo;
     }
@@ -76,12 +62,9 @@ public final class ActionsUtils {
      * @return
      */
     public static ActionInfo createPurchase() {
-        HashSet<String> purchaseNext = new HashSet<String>();
-
-        purchaseNext.add("watch");
 
         ActionExec action = ActionExec.ActionFactory.createAction("purchase");
-        ActionInfo actionInfo = new ActionInfo(purchaseNext, action);
+        ActionInfo actionInfo = new ActionInfo(action);
 
         return actionInfo;
     }
@@ -91,13 +74,9 @@ public final class ActionsUtils {
      * @return
      */
     public static ActionInfo createWatch() {
-        HashSet<String> watchNext = new HashSet<String>();
-
-        watchNext.add("like");
-        watchNext.add("rate");
 
         ActionExec action = ActionExec.ActionFactory.createAction("watch");
-        ActionInfo actionInfo = new ActionInfo(watchNext, action);
+        ActionInfo actionInfo = new ActionInfo(action);
 
         return actionInfo;
     }
@@ -107,13 +86,10 @@ public final class ActionsUtils {
      * @return
      */
     public static ActionInfo createLike() {
-        HashSet<String> registerSetNext = new HashSet<String>();
-
-        registerSetNext.add("rate");
 
         ActionExec action = ActionExec.ActionFactory.createAction("like");
 
-        ActionInfo actionInfo = new ActionInfo(registerSetNext, action);
+        ActionInfo actionInfo = new ActionInfo(action);
 
         return actionInfo;
     }
@@ -122,12 +98,9 @@ public final class ActionsUtils {
      * @return
      */
     public static ActionInfo createRate() {
-        HashSet<String> rateMovieNext = new HashSet<String>();
-
-        rateMovieNext.add("like");
 
         ActionExec action = ActionExec.ActionFactory.createAction("rate");
-        ActionInfo actionInfo = new ActionInfo(rateMovieNext, action);
+        ActionInfo actionInfo = new ActionInfo(action);
 
         return actionInfo;
     }
@@ -136,10 +109,9 @@ public final class ActionsUtils {
      * @return
      */
     public static ActionInfo createBuyPremiumAccount() {
-        HashSet<String> buyPremiumAccountNext = new HashSet<String>();
 
         ActionExec action = ActionExec.ActionFactory.createAction("buy premium account");
-        ActionInfo actionInfo = new ActionInfo(buyPremiumAccountNext, action);
+        ActionInfo actionInfo = new ActionInfo(action);
 
         return actionInfo;
     }
@@ -148,19 +120,21 @@ public final class ActionsUtils {
      * @return
      */
     public static ActionInfo createBuyTokens() {
-        HashSet<String> buyTokensNext = new HashSet<String>();
 
         ActionExec action = ActionExec.ActionFactory.createAction("buy tokens");
-        ActionInfo actionInfo = new ActionInfo(buyTokensNext, action);
+        ActionInfo actionInfo = new ActionInfo(action);
 
         return actionInfo;
     }
 
+    /**
+     * Method to initialise the subscribe Action
+     * @return
+     */
     public static ActionInfo createSubscribe() {
-        HashSet<String> subscribeNext = new HashSet<String>();
 
         ActionExec action = ActionExec.ActionFactory.createAction("subscribe");
-        ActionInfo actionInfo = new ActionInfo(subscribeNext, action);
+        ActionInfo actionInfo = new ActionInfo(action);
 
         return actionInfo;
     }
@@ -169,10 +143,8 @@ public final class ActionsUtils {
      * a mapper from the action name to the action that can be made
      * @return
      */
-    public static HashMap<String, ActionInfo> createActions(final ArrayList<Movie> movies) {
+    public static HashMap<String, ActionInfo> createActions() {
         HashMap<String, ActionInfo> actions = new HashMap<String, ActionInfo>();
-
-        movieList = movies;
 
         actions.put("login", createLogin());
         actions.put("register", createRegister());

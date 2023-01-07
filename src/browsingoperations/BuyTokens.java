@@ -11,10 +11,13 @@ import readinput.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class BuyTokens extends ActionExec{
+public class BuyTokens extends ActionExec {
 
     public BuyTokens() { }
 
+    /** inherited method to buy tokens
+     * if the user has enough balance
+     */
     @Override
     public void execute(final User currentUser,
                         final String currentMovie, final ArrayList<Movie> movieList,
@@ -36,14 +39,5 @@ public class BuyTokens extends ActionExec{
 
         currentUser.setTokensCount(currentUser.getTokensCount() + Integer.parseInt(count));
         currentUser.getCredentials().setBalance(String.valueOf(balance - Integer.parseInt(count)));
-
-        if (actionParameters == null) {
-            actionParameters = new ActionBuilder.Builder("buy tokens")
-                    .currentUser(currentUser)
-                    .build();
-        } else {
-            actionParameters.setCurrentUser(currentUser);
-        }
-
     }
 }

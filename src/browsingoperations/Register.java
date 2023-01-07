@@ -16,6 +16,16 @@ public class Register extends ActionExec {
 
     public Register() { }
 
+    /**
+     * inherited method from ActionExec
+     * to register a user
+     * if the user already exist, print error
+     * otherwise create the user
+     * add it to the database
+     * register it as new observer
+     * return the new lists
+     * current user and page
+     */
     @Override
     public void execute(final User currentUser,
                         final String currentMovie, final ArrayList<Movie> movieList,
@@ -47,14 +57,12 @@ public class Register extends ActionExec {
         if (actionParameters == null) {
             actionParameters = new ActionBuilder.Builder("register")
                     .currentUser(newUser)
-                    .userList(userList)
                     .currentPage("homepage autentificat")
                     .notUserBannedMovies(notBanned)
                     .filteredList(notBanned)
                     .build();
         } else {
             actionParameters.setCurrentUser(newUser);
-            actionParameters.setUserList(userList);
             actionParameters.setCurrentPage("homepage autentificat");
             actionParameters.setNotUserBannedMovies(notBanned);
             actionParameters.setFilteredList(notBanned);

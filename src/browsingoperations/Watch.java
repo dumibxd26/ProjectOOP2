@@ -11,10 +11,15 @@ import readinput.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Watch extends ActionExec{
+public class Watch extends ActionExec {
 
     public Watch() { }
 
+    /**
+     * inherited method to execute the action
+     * if the movie is not purchased it can't be watched, throw error
+     * if the movie is already watched, it can be watched again
+     */
     @Override
     public void execute(final User currentUser,
                         final String currentMovie, final ArrayList<Movie> movieList,
@@ -37,7 +42,7 @@ public class Watch extends ActionExec{
             }
         }
 
-        if (isPurchased == false) {
+        if (!isPurchased) {
             WriteUtils.generalError();
             return;
         }
@@ -49,7 +54,7 @@ public class Watch extends ActionExec{
 
         // Check if the movie was already watched
         // not to add it again in the list of watched movies
-        if (currentUser.getWatchedMovies().contains(movie) == false) {
+        if (!currentUser.getWatchedMovies().contains(movie)) {
             currentUser.getWatchedMovies().add(movie);
         }
 

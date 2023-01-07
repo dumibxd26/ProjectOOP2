@@ -91,6 +91,11 @@ public final class WriteUtils {
         return arrayNode;
     }
 
+    /**
+     * Function to generate a node of the Notification node
+     * @param notification
+     * @return
+     */
     public static ObjectNode createNotificationNode(final Notification notification) {
         ObjectNode node = objMapper.createNode();
 

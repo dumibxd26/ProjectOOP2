@@ -4,10 +4,10 @@ import readinput.Movie;
 import readinput.Notification;
 import readinput.User;
 import readinput.Credentials;
-
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
-import java.security.KeyPair;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Comparator;
+import java.util.Map;
 
 public final class BrowsingUtils {
 
@@ -255,6 +255,17 @@ public final class BrowsingUtils {
         return newArr;
     }
 
+    /**
+     * Utilty function to handle the last action when all actions are served
+     * If the user is premium, we obtain all of his liked movies
+     * we create a list of top of genres by number of likes
+     * we sort that list by number of likes and then by genre name
+     * we sort all the movies list by rating
+     * we find the first not watched movies from the desired genres
+     * we add it to the notification list
+     * @param user
+     * @param movieList
+     */
     public static void handlePremiumEnding(final User user, final ArrayList<Movie> movieList) {
 
 
@@ -276,10 +287,10 @@ public final class BrowsingUtils {
             }
         }
        class Pair {
-            String genre;
-            int likes;
+            private String genre;
+            private int likes;
 
-            public Pair(String genre, int likes) {
+            Pair(final String genre, final int likes) {
                 this.genre = genre;
                 this.likes = likes;
             }
@@ -324,14 +335,14 @@ public final class BrowsingUtils {
                         }
                     }
 
-                    if (found == false) {
+                    if (!found) {
                         movieName = movie.getName();
                         foundBest = true;
                         break;
                     }
                 }
             }
-            if (foundBest == true) {
+            if (foundBest) {
                 break;
             }
         }

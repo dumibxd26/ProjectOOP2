@@ -12,25 +12,41 @@ import java.util.HashMap;
 
 public abstract class ActionExec {
 
-    ActionBuilder actionParameters = null;
+    protected ActionBuilder actionParameters = null;
 
-    public abstract void execute(final User currentUser,
-                                 final String currentMovie, final ArrayList<Movie> movieList,
-                                 final ArrayList<User> userList, final String startsWith,
-                                 final String count, final String rate, final Credentials credentials,
-                                 final Filters filters, final ArrayList<Movie> filteredList,
-                                 final ArrayList<Movie> notUserBannedMovies, final Movie addedMovie,
-                                 final String deletedMovie, final String currentPage,
-                                 final HashMap<String, ActionInfo> actions,
-                                 final HashMap<User, HashMap<Movie, Integer>> userMovieRatings,
-                                 final String subscribedGenre, final Notifications notifications);
+    /**
+     * function meant to be overriden by the child classes
+     * to implement their functionality
+     */
+    public abstract void execute(User currentUser,
+                                 String currentMovie, ArrayList<Movie> movieList,
+                                 ArrayList<User> userList, String startsWith,
+                                 String count, String rate, Credentials credentials,
+                                 Filters filters, ArrayList<Movie> filteredList,
+                                 ArrayList<Movie> notUserBannedMovies, Movie addedMovie,
+                                 String deletedMovie, String currentPage,
+                                 HashMap<String, ActionInfo> actions,
+                                 HashMap<User, HashMap<Movie, Integer>> userMovieRatings,
+                                 String subscribedGenre, Notifications notifications);
 
+    /**
+     * getter for the actionParameters
+     * @return
+     */
     public ActionBuilder getActionParameters() {
         return actionParameters;
     }
 
+    /**
+     * Factory class for creating the action objects
+     */
     public class ActionFactory {
-
+        /**
+         * method that return the desired action
+         * for the input
+         * @param actionType
+         * @return the action object
+         */
         public static ActionExec createAction(final String actionType) {
 
             switch (actionType) {

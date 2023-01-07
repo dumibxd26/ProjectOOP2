@@ -7,42 +7,51 @@ import readinput.User;
 
 import java.util.ArrayList;
 
-//public interface Subject {
-//    void registerObserver(Observer o);
-//    void notifyObservers();
-//}
-//
-//public interface Observer {
-//    void update(Subject s);
-//}
-
 public class Notifications {
     private ArrayList<User> observers;
 
-    ArrayList<Movie> movieList;
+    private ArrayList<Movie> movieList;
 
     // initialise object
-    public Notifications(ArrayList<Movie> movieList,
-                                  ArrayList<User> userList) {
+    public Notifications(final ArrayList<Movie> movieList,
+                         final ArrayList<User> userList) {
         this.movieList = movieList;
         observers = userList;
     }
 
-    public void registerObserver(User newUser) {
+    /**
+     * Add a new observer(a user)
+     * @param newUser
+     */
+    public void registerObserver(final User newUser) {
         observers.add(newUser);
     }
 
-    public void modifyState(String actionType, Movie movie, String deletedMovie) {
+    /**
+     * A new user is added(a new user registers)
+     * @param actionType
+     * @param movie
+     * @param deletedMovie
+     */
+    public void modifyState(final String actionType,
+                            final Movie movie,
+                            final String deletedMovie) {
 
         // Notify all observers
         if (actionType.compareTo("add") == 0) {
             handleAdd(movie);
         } else if (actionType.compareTo("delete") == 0) {
-            handleRemove(deletedMovie);
+            handleDelete(deletedMovie);
         }
     }
 
-    private void handleAdd(Movie movie) {
+    /**
+     * notify all observers
+     * if a movie is added and it is not banned for their country
+     * and it is not already in the list of movies
+     * @param movie
+     */
+    private void handleAdd(final Movie movie) {
 
         // check if the movie list contains the movie
         for (Movie listMovie : movieList) {
@@ -55,7 +64,9 @@ public class Notifications {
          for (User user : observers) {
 
             for (String genre : movie.getGenres()) {
-                if(user.getSubscribedGenres().contains(genre)) {
+                if (user.getSubscribedGenres().contains(genre)
+                    && !movie.getCountriesBanned().contains(user.getCredentials().getCountry())) {
+
                     Notification notification = new Notification(movie.getName(), "ADD");
                     user.getNotifications().add(notification);
                     break;
@@ -65,7 +76,13 @@ public class Notifications {
         movieList.add(movie);
     }
 
-    private void handleRemove(String deletedMovieName) {
+    /**
+     * notify all observers
+     * if a movie is deleted and they had purchased it
+     * and handle the case if a user is premium or not
+     * @param deletedMovieName
+     */
+    private void handleDelete(final String deletedMovieName) {
 
         Movie deleteMovie = null;
 
@@ -76,7 +93,8 @@ public class Notifications {
                 for (User user : observers) {
 
                         if (user.getPurchasedMovies().contains(deletedMovie)) {
-                            Notification notification = new Notification(deletedMovie.getName(), "DELETE");
+                            Notification notification = new Notification(deletedMovie.getName(),
+                                    "DELETE");
                             user.getNotifications().add(notification);
 
                             // delete the movie from the user's purchased movies
@@ -112,9 +130,7 @@ public class Notifications {
         } else {
             movieList.remove(deleteMovie);
         }
-
     }
-
 }
 
 

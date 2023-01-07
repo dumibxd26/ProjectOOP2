@@ -5,7 +5,7 @@ import readinput.User;
 
 import java.util.ArrayList;
 
-public class WrapperPageUtils {
+public final class WrapperPageUtils {
 
     private static User currentUser;
     private static String currentPage;
@@ -24,6 +24,11 @@ public class WrapperPageUtils {
         this.pagesHistory = pagesHistory;
     }
 
+    /** singleton pattern
+     * this class is basically a helper for
+     * change page operations
+     * @return the instance
+     */
     public static WrapperPageUtils getInstance(final User currentUserParam,
                                                final String currentPageParam,
                                                final ArrayList<Movie> filteredListParam,
@@ -45,7 +50,7 @@ public class WrapperPageUtils {
         return currentUser;
     }
 
-    public void setCurrentUser(User currentUser) {
+    public void setCurrentUser(final User currentUser) {
         this.currentUser = currentUser;
     }
 
@@ -53,7 +58,7 @@ public class WrapperPageUtils {
         return currentPage;
     }
 
-    public void setCurrentPage(String currentPage) {
+    public void setCurrentPage(final String currentPage) {
         this.currentPage = currentPage;
     }
 
@@ -61,7 +66,7 @@ public class WrapperPageUtils {
         return filteredList;
     }
 
-    public void setFilteredList(ArrayList<Movie> filteredList) {
+    public void setFilteredList(final ArrayList<Movie> filteredList) {
         this.filteredList = filteredList;
     }
 
@@ -69,7 +74,7 @@ public class WrapperPageUtils {
         return pagesHistory;
     }
 
-    public void setPagesHistory(ArrayList<Frame> pagesHistory) {
+    public void setPagesHistory(final ArrayList<Frame> pagesHistory) {
         this.pagesHistory = pagesHistory;
     }
 }

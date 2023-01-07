@@ -16,6 +16,12 @@ public class Filter extends ActionExec {
 
     public Filter() { }
 
+    /**
+     * inherited method to execute the action
+     * filter the lists of movies depending
+     * on the criterias
+     * then sort if it is requested
+     */
     @Override
     public void execute(final User currentUser,
                         final String currentMovie, final ArrayList<Movie> movieList,

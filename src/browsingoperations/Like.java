@@ -15,6 +15,11 @@ public class Like extends ActionExec {
 
     public Like() { }
 
+    /**
+     * extented method from ActionExec
+     * if the user has not watched the movie, throw error
+     * otherwise like the movie
+     */
     @Override
     public void execute(final User currentUser,
                         final String currentMovie, final ArrayList<Movie> movieList,
@@ -30,13 +35,14 @@ public class Like extends ActionExec {
         Movie selectedMovie = filteredList.get(0);
 
         Boolean watched = false;
-        for (Movie movie : currentUser.getWatchedMovies())
+        for (Movie movie : currentUser.getWatchedMovies()) {
             if (movie.getName().compareTo(selectedMovie.getName()) == 0) {
                 watched = true;
                 break;
             }
+        }
 
-        if (watched == false) {
+        if (!watched) {
             WriteUtils.generalError();
             return;
         }
@@ -50,18 +56,5 @@ public class Like extends ActionExec {
         selectedMovie.setNumLikes(selectedMovie.getNumLikes() + 1);
 
         WriteUtils.noError(filteredList, currentUser);
-
-        // mai bine nu faci ptc in primu rand e fara sens
-        // in al doilea rand, daca actiunea da fail ptc nu se poate vedea
-        // se opreste inainte sa se modifice asta
-        // si lista filtrata nu apuca sa se modifice si se ia cea de la
-        // like ul dinainte cu useru dinainte
-//        if (actionParameters == null) {
-//            actionParameters = new ActionBuilder.Builder("like")
-//                    .filteredList(filteredList)
-//                    .build();
-//        } else {
-//            actionParameters.setFilteredList(filteredList);
-//        }
     }
 }

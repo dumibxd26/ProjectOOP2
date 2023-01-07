@@ -11,10 +11,17 @@ import readinput.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Subscribe extends ActionExec{
+public class Subscribe extends ActionExec {
 
     public Subscribe() { }
 
+    /**
+     * inherited method to execute the action
+     * if the user is not already subscribed to the genre
+     * and the movie contains the desired genre
+     * subscribe to the genre
+     * adding the movie to the list of subscribed genres
+     */
     @Override
     public void execute(final User currentUser,
                         final String currentMovie, final ArrayList<Movie> movieList,
@@ -29,7 +36,7 @@ public class Subscribe extends ActionExec{
 
         Movie movie = filteredList.get(0);
 
-        if (movie.getGenres().contains(subscribedGenre) == false
+        if (!movie.getGenres().contains(subscribedGenre)
             || currentUser.getSubscribedGenres().contains(subscribedGenre)) {
             WriteUtils.generalError();
             return;

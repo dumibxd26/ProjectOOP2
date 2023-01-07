@@ -7,7 +7,10 @@ import initializations.ActionInfo;
 import initializations.ActionsUtils;
 import initializations.PageInfo;
 import initializations.PageUtils;
-import readinput.*;
+import readinput.User;
+import readinput.Movie;
+import readinput.Input;
+import readinput.Action;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +46,7 @@ public final class Run {
         notUserBannedMovies = null;
 
         HashMap<String, PageInfo> pages = PageUtils.createPages();
-        HashMap<String, ActionInfo> actions = ActionsUtils.createActions(movieList);
+        HashMap<String, ActionInfo> actions = ActionsUtils.createActions();
         // Iterate through te list of actions and execute each action
         for (Action actionInput : actionsList) {
             if (actionInput.getType().compareTo("change page") == 0) {
@@ -84,7 +87,7 @@ public final class Run {
                         WriteUtils.pageSeeDetails(returnMovie, currentUser);
                     }
                 }
-            } else if(actionInput.getType().compareTo("database") == 0) {
+            } else if (actionInput.getType().compareTo("database") == 0) {
                     notifications.modifyState(actionInput.getFeature(),
                             actionInput.getAddedMovie(),
                             actionInput.getDeletedMovie());
@@ -100,8 +103,8 @@ public final class Run {
                            actionInput.getCount(), actionInput.getRate(),
                            actionInput.getCredentials(), actionInput.getFilters(),
                            filteredList, notUserBannedMovies,
-                           actionInput.getAddedMovie(), actionInput.getDeletedMovie()
-                           ,currentPage, actions, userMovieRatings,
+                           actionInput.getAddedMovie(), actionInput.getDeletedMovie(),
+                           currentPage, actions, userMovieRatings,
                            actionInput.getSubscribedGenre(), notifications);
                 } else {
                    WriteUtils.generalError();
@@ -111,24 +114,28 @@ public final class Run {
                    continue;
                 }
 
-                if (actions.get(feature).getAction().getActionParameters().getCurrentUser() != null) {
-                   currentUser = actions.get(feature).getAction().getActionParameters().getCurrentUser();
+                if (actions.get(feature).getAction()
+                        .getActionParameters().getCurrentUser() != null) {
+                   currentUser = actions.get(feature).getAction()
+                           .getActionParameters().getCurrentUser();
                 }
 
-                if (actions.get(feature).getAction().getActionParameters().getFilteredList() != null) {
-                   filteredList = actions.get(feature).getAction().getActionParameters().getFilteredList();
+                if (actions.get(feature).getAction()
+                        .getActionParameters().getFilteredList() != null) {
+                   filteredList = actions.get(feature).getAction()
+                           .getActionParameters().getFilteredList();
                 }
 
-                if (actions.get(feature).getAction().getActionParameters().getNotUserBannedMovies() != null) {
-                   notUserBannedMovies = actions.get(feature).getAction().getActionParameters().getNotUserBannedMovies();
+                if (actions.get(feature).getAction()
+                        .getActionParameters().getNotUserBannedMovies() != null) {
+                   notUserBannedMovies = actions.get(feature).getAction()
+                           .getActionParameters().getNotUserBannedMovies();
                 }
 
-                if (actions.get(feature).getAction().getActionParameters().getCurrentPage() != null) {
-                   currentPage = actions.get(feature).getAction().getActionParameters().getCurrentPage();
-                }
-
-                if (actions.get(feature).getAction().getActionParameters().getUserList() != null) {
-                    userList = actions.get(feature).getAction().getActionParameters().getUserList();
+                if (actions.get(feature).getAction()
+                        .getActionParameters().getCurrentPage() != null) {
+                   currentPage = actions.get(feature).getAction()
+                           .getActionParameters().getCurrentPage();
                 }
 
                 // The only action that can lead to authenticated homepage
@@ -139,11 +146,6 @@ public final class Run {
                     Frame frame = new Frame("homepage autentificat", filteredList, null);
                     pagesHistory.add(frame);
                 }
-                for (Movie movie : movieList) {
-                    System.out.println(movie.getName() + " " + movie.getNumLikes());
-                }
-
-                System.out.println("\n");
            }
         }
 

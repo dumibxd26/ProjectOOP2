@@ -9,7 +9,6 @@ public final class PageUtils {
 
     /**
      * Utility method to create not authenticated page possible next actions and pages
-     * @return
      */
     public static PageInfo createHomepageNotAuth() {
 

@@ -11,10 +11,17 @@ import readinput.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Purchase extends ActionExec{
+public class Purchase extends ActionExec {
 
     public Purchase() { }
 
+    /**
+     * inherited method to purchase the desired movie
+     * if the user is premium, we check if it has
+     * movies left to buy, and we exchange one with 2 tokens
+     * if the current user has enough money to purchase the movie
+     * we add the movie to the user's purchased movies
+     */
     @Override
     public void execute(final User currentUser,
                         final String currentMovie, final ArrayList<Movie> movieList,
@@ -56,8 +63,6 @@ public class Purchase extends ActionExec{
             WriteUtils.noError(filteredList, currentUser);
         } else {
             WriteUtils.generalError();
-            return;
         }
-
     }
 }

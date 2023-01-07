@@ -17,6 +17,12 @@ public class Rate extends ActionExec {
     private static final int MAXIMUM_RATING = 5;
     public Rate() { }
 
+    /**
+     * inherited function for executing the action rate
+     * if the movie is not watched, throw error
+     * it the movie was already rated, change the rate,
+     * and modify its rating for the movie in the hashset userMovieRatings
+     */
     @Override
     public void execute(final User currentUser,
                         final String currentMovie, final ArrayList<Movie> movieList,
@@ -32,13 +38,14 @@ public class Rate extends ActionExec {
         Movie selectedMovie = filteredList.get(0);
 
         Boolean watched = false;
-        for (Movie movie : currentUser.getWatchedMovies())
+        for (Movie movie : currentUser.getWatchedMovies()) {
             if (movie.getName().compareTo(selectedMovie.getName()) == 0) {
                 watched = true;
                 break;
             }
+        }
 
-        if (watched == false) {
+        if (!watched) {
             WriteUtils.generalError();
             return;
         }
@@ -59,17 +66,17 @@ public class Rate extends ActionExec {
             userMovieRatings.put(currentUser, new HashMap<>());
         }
 
-        if (currentUser.getRatedMovies().contains(selectedMovie) == false) {
+        if (!currentUser.getRatedMovies().contains(selectedMovie)) {
             currentUser.getRatedMovies().add(selectedMovie);
             selectedMovie.setNumRatings(selectedMovie.getNumRatings() + 1);
         } else {
-            selectedMovie.setRating(selectedMovie.getRating() - userMovieRatings.get(currentUser).get(selectedMovie));
+            selectedMovie.setRating(selectedMovie.getRating()
+                    - userMovieRatings.get(currentUser).get(selectedMovie));
         }
 
         selectedMovie.setRating(selectedMovie.getRating() + intRate);
         userMovieRatings.get(currentUser).put(selectedMovie, intRate);
 
         WriteUtils.noError(filteredList, currentUser);
-
     }
 }

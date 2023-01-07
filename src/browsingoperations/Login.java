@@ -16,6 +16,13 @@ public class Login extends ActionExec {
 
         public Login() { }
 
+        /**
+         * execute function inherited from ActionExec
+         * method to check if the user exists in the db
+         * and if it does, set the current user to it
+         * return homepage authenticated
+         * and the movie lists
+         */
         @Override
         public void execute(final User currentUser,
                             final String currentMovie, final ArrayList<Movie> movieList,

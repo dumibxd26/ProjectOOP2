@@ -18,7 +18,7 @@ public final class Filters {
         return contains;
     }
 
-    public void setContains(Contains contains) {
+    public void setContains(final Contains contains) {
         this.contains = contains;
     }
 }
