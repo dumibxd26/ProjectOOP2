@@ -257,6 +257,7 @@ public final class BrowsingUtils {
 
     public static void handlePremiumEnding(final User user, final ArrayList<Movie> movieList) {
 
+
         if (user == null || user.getCredentials().getAccountType().compareTo("standard") == 0) {
             return;
         }
@@ -306,17 +307,32 @@ public final class BrowsingUtils {
 
         // sort the movies in decreasing order by the number of likes using comparator.comparing!!
 
-        movieList.sort(Comparator.comparing(Movie::getNumRatings).reversed());
+        movieList.sort(Comparator.comparing(Movie::getNumLikes).reversed());
 
         String movieName = "No recommendation";
 
+        boolean foundBest = false;
         for (Pair movieParams : genresArray) {
             for (Movie movie : movieList) {
-                if (movie.getGenres().contains(movieParams.getGenre())
-                    && user.getWatchedMovies().contains(movie) == false) {
-                    movieName = movie.getName();
-                    break;
+                if (movie.getGenres().contains(movieParams.getGenre())) {
+
+                    boolean found = false;
+                    for (Movie movieCmp : user.getWatchedMovies()) {
+                        if (movieCmp.getName().compareTo(movie.getName()) == 0) {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (found == false) {
+                        movieName = movie.getName();
+                        foundBest = true;
+                        break;
+                    }
                 }
+            }
+            if (foundBest == true) {
+                break;
             }
         }
 

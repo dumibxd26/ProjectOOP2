@@ -139,6 +139,11 @@ public final class Run {
                     Frame frame = new Frame("homepage autentificat", filteredList, null);
                     pagesHistory.add(frame);
                 }
+                for (Movie movie : movieList) {
+                    System.out.println(movie.getName() + " " + movie.getNumLikes());
+                }
+
+                System.out.println("\n");
            }
         }
 

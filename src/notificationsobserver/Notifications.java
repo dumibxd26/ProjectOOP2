@@ -45,9 +45,11 @@ public class Notifications {
     private void handleAdd(Movie movie) {
 
         // check if the movie list contains the movie
-        if (movieList.contains(movie)) {
-            WriteUtils.generalError();
-            return ;
+        for (Movie listMovie : movieList) {
+            if (listMovie.getName().compareTo(movie.getName()) == 0) {
+                WriteUtils.generalError();
+                return;
+            }
         }
 
          for (User user : observers) {
