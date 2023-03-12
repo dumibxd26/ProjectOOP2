@@ -73,9 +73,7 @@
 
     Honestly, the rest of the code is either self explanatory or already explained in the javadocs.
 
-I hope this design is good enough, I struggled a lot to come out with this solution.
-I think it's too much to ask for a better idea, or the best that you found yet, so I would love to hear
-what could have been done better in my homework. Thank you!
+
 
         
    
